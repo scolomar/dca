@@ -12,4 +12,4 @@ It is also faster to react to any changes in the workload as well as more stable
 
 We can think of Docker Swarm as a light, monolithic version of Kubernetes.
 
-If you deploy Docker Swarm in your infrastructure instead of Kubernetes then you might save some money because you will need less hardware resources such as memory or CPU to handle the same amount of workload.
+If you deploy Docker Swarm in your infrastructure instead of Kubernetes then you might save some money because you might need less hardware resources such as memory or CPU to handle the same amount of workload.
