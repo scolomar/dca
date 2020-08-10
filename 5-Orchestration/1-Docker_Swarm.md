@@ -54,7 +54,7 @@ To ensure high availability and automatic resilience of the management we need t
 The number of managers in the cluster is critical for its stability.
 An even number of managers would easily result in a split-brain of the managers leading to an inconsistent global state of the cluster.
 
-The consistency of the state of the cluster is guaranteed by the Raft Consensus Algorithm:
+The consistency of the state of the cluster is guaranteed by the Raft consensus algorithm:
 * https://en.wikipedia.org/wiki/Raft_(computer_science)
 * http://thesecretlivesofdata.com/raft/
 
