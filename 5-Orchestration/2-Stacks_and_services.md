@@ -19,7 +19,7 @@ For example `config` definitions are only supported in version 3.3 and higher of
 
 There is sometimes confussion regarding the name of the Docker compose file and the use of `docker-compose`. 
 Docker Swarm is an orchestrator integrated in the Docker enginer but `docker-compose` is a separate application written in Python.
-Docker Swarm is an orchestrator in the sense that in can handle the deployment of your workload across a network of worker nodes. 
+Docker Swarm is an orchestrator in the sense that it can handle the deployment of your workload across a network of worker nodes. 
 That is not the case of `docker-compose` that can only deploy in a standalone machine using only basic Docker commands. 
 Many of the features available to Docker Swarm such as configs and secrets are not available to `docker-compose`.
 So that `docker-compose` is a nice tool that can be useful for a developer that wants to test a containerized application in his laptop or in a standalone machine but will be totally useless in a production environment where we want high availability by default.
