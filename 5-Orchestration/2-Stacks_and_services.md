@@ -15,6 +15,8 @@ It is the only source of trust when it comes to configure your deployment.
 The documentation is dynamic and is updated with any new feature or deprecation.
 That is why the version of the compose file that appears in the manifest is so important to determine which version of the API it should reference.
 The meaning of the various configuration elements will be different depending on the selected version so it is important to check whether a given feature is available in the version you are using.
+For example `config` definitions are only supported in version 3.3 and higher of the compose file format as specified in the official documentation.
+
 
 
 
