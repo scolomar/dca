@@ -46,6 +46,7 @@ As we have managers and workers in our cluster then we have two different types 
 
 The ensure the high availability of the workload we need at least two workers in the cluster.
 When one worker is down for maintenance or by accident then the other worker will keep the workload available ensuring this way that our application is never down or unavailable.
+Docker Swarm will balance the workload across the available nodes so that a failure in one node does not jeopardize the availability of our containerized applications.
 
 If we have just one manager in the cluster then it will ensure its consistency but not the high availability.
 Any failure or maintenance in this manager will require manual failover.
