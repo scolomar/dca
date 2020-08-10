@@ -66,3 +66,10 @@ This method will ease the implementation of Continous Integration and Continuous
 
 Given the limited size for the Docker configs and secrets we will use volumes when we want to provision any file of bigger size.
 
+Volumes will be used for any of these usecases:
+1. To provision any configuration to the containers that does not fit in a Docker config or secret
+1. To mount an external filesystem inside the container.
+The reasons for doing so could vary depending on the specific circumstances.
+You could be for example interested in bypassing the copy-on-write system of the merged union filesystem of the container.
+Or you could maybe interested in having property of a subfolder for security reasons (like when mounting /var/run in an external volume for example).
+
