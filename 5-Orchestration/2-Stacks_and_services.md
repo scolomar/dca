@@ -61,4 +61,8 @@ They are equivalent to Docker configs but in this case they are stored encrypted
 They can provision any kind of text files, scripts or even binary files to the target containers.
 The only limit is the size with a maximum of 500 kB.
 
+The correct use of Docker configs and secrets would be the following: any specific configuration for the environment such as the proxy or database credentials will be described in a separate file through a Docker config or secret definition. This way the deployment of the same Docker container in testing or production will not vary anyone of the manifests. The Dockerfile will be the same in testing and production as well as the Docker compose file. The only difference will be the content of the Docker config and secret that will contain the actual credentials for the testing or production environment respectively.
+This method will ease the implementation of Continous Integration and Continuous Delivery (CI/CD) pipelines.
+
+Given the limited size for the Docker configs and secrets we will use volumes when we want to provision any file of bigger size.
 
