@@ -56,3 +56,5 @@ We will comment in another section regarding the public and private subnet distr
 This is great. Now we have HA. But how can Docker handle this situation? Is the Docker engine capable of spreading the workload across a cluster of remote machines in differente availability zones?
 
 The answer is positive if we enable the swarm mode. When swarm is initialized then the Docker engine is capable of managing our deployment across the cluster no matter how many machines we have.
+
+Docker is then working as an orchestrator controlling the workload across multiple nodes. Docker is not the only available orchestrator. Kubernetes is another well known orchestrator but Docker Swarm is much easier to configure and deploy. Docker Swarm is also more stable, ligthtweight and faster to react to any change in the workload.
