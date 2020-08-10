@@ -6,8 +6,8 @@ Once you have your cluster up and running you can deploy your business applicati
 A stack is a pile of microservices that will compose your containerized application.
 You normally use a different stack for each independent application.
 
-You need a compose file to deploy your stack.
-This a manifest similar to a Kubernetes manifest.
+You need a Docker compose file to deploy your stack.
+This a manifest very similar to a Kubernetes manifest.
 The main difference between Docker and Kubernetes manifests is that in Kubernetes every object is described in its own manifest meanwhile Docker groups in the same compose file all the elements of the stack such as networks, volumes, services, secrets, configs, and any other fundamental part of your deployment.
 
 When you are creating your Docker compose file to deploy your application it is good practice to check often the official reference: https://docs.docker.com/compose/compose-file.
@@ -66,10 +66,47 @@ This method will ease the implementation of Continous Integration and Continuous
 
 Given the limited size for the Docker configs and secrets we will use volumes when we want to provision any file of bigger size.
 
-Volumes will be used for any of these usecases:
-1. To provision any configuration to the containers that does not fit in a Docker config or secret
+Volumes will be used for any of these use cases:
+1. To provision any configuration to the containers that does not fit in a Docker config or secret.
 1. To mount an external filesystem inside the container.
-The reasons for doing so could vary depending on the specific circumstances.
+The reasons for doing so vary depending on the specific circumstances.
 You could be for example interested in bypassing the copy-on-write system of the merged union filesystem of the container.
 Or you could maybe interested in having property of a subfolder for security reasons (like when mounting /var/run in an external volume for example).
+1. To have a persistent volume outside the lifecycle of the container to store for example a database.
+1. To share data between containers.
+1. Any other legitimate reason to use a volume as an external filesystem mounted inside the container.
 
+Volumes are defined in the Docker compose file twice:
+1. In the volume definition itself.
+1. In the description of the container where it is specified the path where to mount the volume inside the container.
+
+There is little difference between the Docker compose file and the Kubernetes manifest for the Deployment object. Both of them have similar specifications.
+
+Besides the volumes we will also describe the networks in the Docker compose file.
+It is important to take into consideration that two services (sometimes called microservices) will not be able to talk to each other unless they are in the same Docker network.
+One service can nevertheless be attached to as many networks as needed.
+So that for example if there is a microservice running Tomcat that wants to talk to another microservice runing MySQL then both of them need to be attached to the same network otherwise Docker will by default block any traffic between them.
+Docker networking is secure by default.
+This is the opposite of Kubernetes networking.
+In Kubernetes any microservice can by default talk to any other microservice in the same namespace.
+Only setting up a Network Policy can block the traffic between Pods.
+
+Services are also described in the Docker compose file.
+They are sometimes called microservices by some users because they represent the decomposition of a monolythic application into different "microservices" but the official definition is "services" both in Docker and Kubernetes.
+Services are actually internal load balancers that will balance the requests to the service through a set of targets that are the actual containers running the application (Pods in the case of Kubernetes) and listening on the specified port.
+The name of the service will represent the full qualified domain name (FQDN) of the load balancer.
+The IP of the load balancer (also called VIP: Virtual IP) will be fixed during the whole life of the service (the same thing is called Cluster IP in Kubernetes) and it will be accessible only from the Docker network attached to the service unless we also publish the port in the network of the host machine with the option `--publish`.
+Docker Swarm will set up a (configurable) healthcheck to determine whether the target container is alive otherwise remove it from the list of available targets for the load balancer of the service.
+
+In the definition of the service we also specify the conditions for the deployment such as the number of replicas, the placement conditions, the resource limits to be applied, the Docker image to be run, as well as any other specification. It is interesting to be noticed that in Kubernetes we separate this definition in different objects: one for the service, another for the deployment, another one for the external routing, another one for the persistent volume, and so on.
+As Docker Swarm is a monolythic solution everything is integrated in the same definition of the Docker compose file though the characteristics of each component are very similar to their counterparts in Kubernetes.
+
+Once we have defined the conditions for the deployment in a section of the service definition then Docker Swarm will schedule the required replicas.
+The deployment of an individual replica (that is a container) will need to be scheduled in a specific node with enough resources.
+The Docker task is the scheduling of one replica in an available node.
+Once a task has been assigned to a node that will never change.
+If the deployment of a replica fails then that task will be shut down and replaced by another task but tasks are never restarted.
+The same issue happens in Kubernetes with pods (which represent the scheduling of one replica to an available node).
+If a pod fails for some reason then it is replaced by a new one but never rescheduled or restarted.
+There is therefore a clear similarity between Docker tasks and Kubernetes pods.
+The main difference between a Docker task and a Kubernetes pod is that a Docker task can only spin up one individual container (replica) meanwhile a Kubernetes pod can host more than one container.
