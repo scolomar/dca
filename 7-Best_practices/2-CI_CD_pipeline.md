@@ -70,7 +70,7 @@ In order to implement a CI/CD pipeline you need to consider the following proces
    We also want this Docker compose file to be hosted in a software version control system in order to benefit of the same features such as easy reverting, blaming, merging and tagging.
    It is considered a best practice nowadays to host not only the software but also any operations code or configuration file in a sofware version control system such as git for example.
    This approach is sometimes called GitOps.
-   Hosting our Docker compose file in a git repository will make it easy to be retrieved with the absolute certainty of the release or commit we are going to test.
+   Hosting our Docker compose file in a git repository will make it easy to be retrieved with the absolute certainty regarding the release or commit we have downloaded and are about to test.
    
    The testing process can also be automated through Jenkins, Travis or any other automation tool.
    Jenkins for example will use the Docker compose file to deploy our application and apply all the necessary tests.
