@@ -21,7 +21,7 @@ In order to implement a CI/CD pipeline you need to consider the following proces
    
    Both cases are equally effective though Docker containers are proven to spare resources and ease the delivery and maintenance of the whole process.
    Docker containers are typically one order of magnitude less resource expensive than virtual machines.
-   Virtual machines are nevertheless considered to be more secure than containers. 
+   Virtual machines are definitively more secure than containers. 
    Following best practices allows nevertheless to safely deploy containerized applications into a production environment.
    The different underlying technologies that support the deployment of containers and virtual machines are the cause for these differences in security and performance.
    
