@@ -92,7 +92,7 @@ In order to implement a CI/CD pipeline you need to consider the following proces
 As we have already explained the correct implementation of a full CI/CD pipeline mainly relies on two simple manifests:
 * Dockerfile: 
   
-  Instructions to build an image containing the software as well as any necessary dependencies.
+  Instructions to build an image containing the software as well as all necessary dependencies.
 * Docker compose file: 
 
   Description of the necessary objects as well as their mutual interconnections in order to successfully deploy our containerized application.
