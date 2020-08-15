@@ -3,7 +3,7 @@
 ### Section 2: CI/CD pipeline
 
 Continuous Integration is about testing the new code as soon as it is developed.
-Continuous Delivery is about delivering artifacts ready for production once the release of new code has been validated.
+Continuous Delivery is about delivering artifacts ready for production once the release of the new code has been validated.
 Continuous Deployment is about deploying the new code release into production as soon as it is delivered.
 
 Continuous Deployment is considered to be a more aggressive strategy. 
