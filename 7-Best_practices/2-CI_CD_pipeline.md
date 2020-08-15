@@ -64,7 +64,7 @@ In order to implement a CI/CD pipeline you need to consider the following proces
    
    We will still try to avoid hardcoding the deployment configuration to a specific environment so that our manifest will be as generic as possible.
    For example the description of the secret containing the database credentials will not contain any reference to the environment where we want to deploy our application.
-   This way the same Docker compose file will be valid to deploy our application in the testing or in the production environment.
+   This way the same Docker compose file will be equally valid to deploy our application both in the testing or in the production environment.
    Although the content of the Docker secret object will obviously be different in both cases.
    
    We also want this Docker compose file to be hosted in a software version control system in order to benefit of the same features such as easy reverting, blaming, merging and tagging.
