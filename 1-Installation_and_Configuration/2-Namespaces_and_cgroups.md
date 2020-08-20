@@ -29,3 +29,10 @@ Processes running inside a container can this way safely use the shared memory r
 https://en.wikipedia.org/wiki/Linux_namespaces
 
 Containers will therefore be built using this set of available namespaces to isolate the necessary resources of the Linux Kernel.
+Besides Linux namespaces you can also use cgroups to isolate the resource usage such as CPU or memory inside a container.
+
+Control groups (cgroups) is another feature of the Linux Kernel initially released in 2007.
+It allows for isolation of the resource usage of a set of processes.
+You can control the usage of CPU and memory utilization, disk I/O throughput, network and many other resources.
+It is not compulsory to set up your containers but it is highly recommend by Docker.
+You can compromise otherwise the stability of your cluster.
