@@ -40,8 +40,9 @@ You can otherwise compromise the stability of your cluster in case your containe
 It is important to understand the fundamental differences between containers and virtual machines.
 A virtual machine is built on top of a set of virtual resources provided by a virtualization software that is the hypervisor.
 The hypervisor will provide access to virtual resources built on top of the actual hardware of the host machine.
-In the virtual machine we will install a full operating system including the kernel as well as our main application with the necessary dependencies like for example Tomcat, MySQL or Apache web server.
-Once our main application is running on the virtual machine it might need access to virtual resources such as memory or disk.
+In the virtual machine we will install a full operating system including the kernel as well as our main application with all the necessary dependencies.
+A typical example would be a virtual machine with Tomcat, MySQL or Apache web server.
+Once our main application is running on the virtual machine it might need access to memory or disk.
 For that purpose it will launch system calls to the guest operating system.
 The hypervisor will then translate those into real system calls to access the actual physical hardware.
 This way virtual machines are so secure because any system call is passed through the hypervisor before actually reaching the host machine.
@@ -53,8 +54,7 @@ It is more about partitioning and isolation.
 The security of a container will depend on how secure the technology behind namespaces and cgroups really is.
 Despite the top level of security achievable by Linux namespaces it will never equate the security of a virtual machine provided by a bare-metal hypervisor.
 
-Given that containers launch system calls directly to the kernel of the host machine there is nothing that prevents them from exhausting the actual physical resources and crash the physical server.
-This justifies the need to limit the access to physical resources with control groups. 
-Namespaces ensure isolation of operating system resources such as the network stack, hostname and PID but it does not limit the usage of any physical resource.
-To limit the usage of resources such as memory, disk or CPU we need to configure the control groups or cgroups.
+Given that containers launch system calls directly to the kernel of the host machine there is nothing that prevents them from exhausting the actual physical resources and crash the host machine.
+Namespaces ensure isolation of the operating system resources such as the network stack, hostname and PID but it does not limit the usage of any physical resource such as memory, disk or CPU.
+In order to control the usage of physical resources we need to configure the control groups or cgroups for that container.
 I would highly recommend to set up cgroups for any container that is going to be used in a production environment.
