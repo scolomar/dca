@@ -25,7 +25,8 @@ Neutron uses this same technology to provide network isolation for the Openstack
 * IPC: For the Inter Process Communications.
 Processes running inside a container can this way safely use the shared memory resources of the host machine and those resources will be private to the container or IPC namespace.
 * UTS: For the Unix Time-Sharing namespaces that will provide a container with a given hostname and domain name.
-* And many others... Please refer to the Wikipedia resource to learn more about Linux namespaces: https://en.wikipedia.org/wiki/Linux_namespaces
+* And many others... Please refer to the Wikipedia resource to learn more about Linux namespaces: 
+  * https://en.wikipedia.org/wiki/Linux_namespaces
 
 Containers will therefore be built using this set of available namespaces to isolate the necessary resources of the Linux Kernel.
 Besides using namespaces you can also use cgroups to isolate the resource usage such as CPU or memory inside a container.
