@@ -51,8 +51,6 @@ In order to prevent that issue you want to run your containerized applications i
 
 That is why we have our cluster set up with two different kinds of machines in the above example: 3 managers and 3 workers. This way we ensure HA of both the business application and the management of the cluster.
 
-We will comment in another section regarding the public and private subnet distribution that also appears in the above picture.
-
 This is great. Now we have HA. But how can Docker handle this situation? Is the Docker engine capable of spreading the workload across a cluster of remote machines in differente availability zones?
 
 The answer is positive if we enable the swarm mode. When swarm is initialized then the Docker engine is capable of managing our deployment across the cluster no matter how many machines we have.
