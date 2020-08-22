@@ -29,10 +29,32 @@ Processes running inside a container can this way safely use the shared memory r
 https://en.wikipedia.org/wiki/Linux_namespaces
 
 Containers will therefore be built using this set of available namespaces to isolate the necessary resources of the Linux Kernel.
-Besides Linux namespaces you can also use cgroups to isolate the resource usage such as CPU or memory inside a container.
+Besides using namespaces you can also use cgroups to isolate the resource usage such as CPU or memory inside a container.
 
 Control groups (cgroups) is another feature of the Linux Kernel initially released in 2007.
 It allows for isolation of the resource usage of a set of processes.
-You can control the usage of CPU and memory utilization, disk I/O throughput, network and many other resources.
-It is not compulsory to set up your containers but it is highly recommend by Docker.
-You can compromise otherwise the stability of your cluster.
+You can control the usage of CPU and memory utilization, disk I/O and network throughput, and many other resources.
+It is not compulsory to set up your containers with control groups but it is officially considered as a best practice by Docker.
+You can otherwise compromise the stability of your cluster in case your containers exhaust the hardware resources of the host machine.
+
+It is important to understand the fundamental differences between containers and virtual machines.
+A virtual machine is built on top of a set of virtual resources provided by a virtualization software that is the hypervisor.
+The hypervisor will provide access to virtual resources built on top of the actual hardware of the host machine.
+In the virtual machine we will install a full operating system including the kernel as well as our main application with the necessary dependencies like for example Tomcat, MySQL or Apache web server.
+Once our main application is running on the virtual machine it might need access to virtual resources such as memory or disk.
+For that purpose it will launch system calls to the guest operating system.
+The hypervisor will then translate those into real system calls to access the actual physical hardware.
+This way virtual machines are so secure because any system call is passed through the hypervisor before actually reaching the host machine.
+
+Containers work in a completely different way.
+They use namespaces and cgroups to access a partition of the resources of the host machine instead of using any kind of virtualization.
+Containers have therefore absolutely nothing to do with virtualization despite some common confusion in this sense.
+It is more about partitioning and isolation.
+The security of a container will depend on how secure the technology behind namespaces and cgroups really is.
+Despite the top level of security achievable by Linux namespaces it will never equate the security of a virtual machine provided by a bare-metal hypervisor.
+
+Given that containers launch system calls directly to the kernel of the host machine there is nothing that prevents them from exhausting the actual physical resources and crash the physical server.
+This justifies the need to limit the access to physical resources with control groups. 
+Namespaces ensure isolation of operating system resources such as the network stack, hostname and PID but it does not limit the usage of any physical resource.
+To limit the usage of resources such as memory, disk or CPU we need to configure the control groups or cgroups.
+I would highly recommend to set up cgroups for any container that is going to be used in a production environment.
