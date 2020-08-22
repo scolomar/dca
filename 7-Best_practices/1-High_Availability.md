@@ -26,7 +26,7 @@ But majority means greater than 50% so that two machines is not enough to ensure
 
 Nevertheless take into account that a big number of instances in a database cluster will exponentially increase the delays since any change in any of the members needs to be immediately propagated to the rest of the cluster. This way a number greater than 7 will make the cluster unusable.
 
-The recommended value will depend on the usecase but definitely needs to be 3 or 5.
+The recommended value will depend on the use case but definitely needs to be 3 or 5.
 
 Now that we know that we need a minimum of 3 machines comes the question of where to locate them. If we place the 3 machines in the same network or data center and there is a general failure then we will have the same problem of lack of availability. So that it is recommended that the 3 instances are located in different networks and possibly different data centers to ensure the fault tolerance of the setup.
 
