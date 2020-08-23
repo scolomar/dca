@@ -69,3 +69,5 @@ If we run the installation of the three packages in the same line then we will o
 #### FROM scratch
 
 #### Environment variables and arguments
+
+#### .dockerignore
