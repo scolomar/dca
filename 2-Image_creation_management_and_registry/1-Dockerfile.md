@@ -22,7 +22,7 @@ The lines that only introduce metadata will not modify the filesystem contained 
 The lines of the Dockerfile that modify the filesystem are lines of code that actually create, delete or modify any element of the filesystem.
 It can be for example the creation of a new file, the modification of an existing one or the installation or removal of a software package.
 
-Every time the Docker daemon executes one line that modifiies the filesystem a new image layer is created.
+Every time the Docker daemon executes one line that modifies the filesystem a new image layer is created.
 Instead of actually modifying the original layer the Docker daemon will create a new image layer that will contain the new file in case of creation or the modified file in case of modification.
 This is important to understand in order to optimize our Dockerfiles for both security and performance.
 
