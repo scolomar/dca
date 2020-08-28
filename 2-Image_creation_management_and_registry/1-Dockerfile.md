@@ -66,7 +66,50 @@ If we run the installation of the three packages in the same line then we will o
 
 #### Multi-stage builds
 
-#### FROM scratch
+When you build a Docker image you normally need to go through the following process:
+1. Fetch the code from the repository
+1. Compile the code to get a valid artifact
+1. Encapsulate the resulting artifact in a final Docker image
+
+You do not need to keep any of the intermediate results of these steps.
+For example after fetching the specific branch or release you want to deploy then you can remove the rest of the repository or even remove the software used to download the code from the remote repository.
+After you have successfully compiled the code and created the final executable binary or Java artifact you can then remove the additional build tools as well as the libraries and dependencies used in the process.
+In the final Docker image that you are going to deploy in the production environment you only need the resulting artifact and the necessary dependencies.
+This way you are improving the security and performance of your final production image.
+The security is improved because you are reducing the attack surface when removing unnecessary software.
+The performance is improved because you are also reducing the number of layers and total size of the image.
+
+In a multi-stage build your Dockerfile consists of several FROM instructions.
+Each FROM instruction will start the build of an intermediate image.
+The result of an intermediate image will be used in the next step removing any dependency used to generate that result.
+In the end you will have your small and secure final image ready for a production environment.
+
+Let us see an example of such a multi-stage build:
+```
+FROM alpine/git AS clone
+WORKDIR /app
+RUN git clone https://github.com/spring-projects/spring-petclinic.git
+
+FROM maven:alpine AS build
+WORKDIR /app
+COPY --from=clone /app/spring-petclinic /app
+RUN mvn install && mv target/spring-petclinic-*.jar target/spring-petclinic.jar
+
+FROM openjdk:jre-alpine AS production
+WORKDIR /app
+COPY --from=build /app/target/spring-petclinic.jar /app
+ENTRYPOINT ["java","-jar"]
+CMD ["spring-petclinic.jar"]
+```
+
+This simple Dockerfile is a perfect example of an optimal build of a Docker image using a Java artifact that will be deployed in production with maximal security and performance.
+In the first stage `clone` we fetch the code using `git` but this software will not be available in our production image.
+In the second stage `build` we use Maven to build the final artifact using many dependencies that will not appear in the final image.
+In our production image we use the resulting artifact of the `build` stage and a Java Runtime Environment to execute our Java application.
+This tiny image will be deployed in production maximizing the security and performance of our containerized application.
+
+This is obviously only an example.
+Your use case might need more complex stages or even dependencies to run the final artifact in the production environment.
 
 #### Environment variables and arguments
 
