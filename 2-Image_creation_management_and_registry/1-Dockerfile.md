@@ -102,12 +102,11 @@ ENTRYPOINT ["java","-jar"]
 CMD ["spring-petclinic.jar"]
 ```
 
-This simple Dockerfile is a perfect example of an optimal build of a Docker image using a Java artifact that will be deployed in production with maximal security and performance.
+This simple Dockerfile is a perfect example of an optimal build of a Docker image creating a Java artifact that will be deployed in production with maximal security and performance.
 In the first stage `clone` we fetch the code using `git` but this software will not be available in our production image.
 In the second stage `build` we use Maven to build the final artifact using many dependencies that will not appear in the final image.
 In our production image we use the resulting artifact of the `build` stage and a Java Runtime Environment to execute our Java application.
 This tiny image will be deployed in production maximizing the security and performance of our containerized application.
-
 This is obviously only an example.
 Your use case might need more complex stages or even dependencies to run the final artifact in the production environment.
 
