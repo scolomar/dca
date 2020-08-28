@@ -109,4 +109,4 @@ In our production image we use the resulting artifact of the `build` stage and a
 This tiny image will be deployed in production maximizing the security and performance of our containerized application.
 
 This is obviously only an example.
-Your use case might need more complex stages or even dependencies to run the final artifact in the production environment.
+Your use case might need more complex stages or dependencies to run the final artifact in the production environment.
