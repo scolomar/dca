@@ -83,6 +83,7 @@ In a multi-stage build your Dockerfile consists of several FROM instructions.
 Each FROM instruction will start the build of an intermediate image.
 The result of an intermediate image will be used in the next step removing any dependency used to generate that result.
 In the end you will have your small and secure final image ready for a production environment.
+
 Let us see an example of such a multi-stage build to containerize a Spring Boot Java application:
 ```
 FROM alpine/git AS clone
@@ -106,9 +107,6 @@ In the first stage `clone` we fetch the code using `git` but this software will 
 In the second stage `build` we use Maven to build the final artifact using many dependencies that will not appear in the final image.
 In our production image we use the resulting artifact of the `build` stage and a Java Runtime Environment to execute our Java application.
 This tiny image will be deployed in production maximizing the security and performance of our containerized application.
+
 This is obviously only an example.
 Your use case might need more complex stages or even dependencies to run the final artifact in the production environment.
-
-#### Environment variables and arguments
-
-#### .dockerignore
