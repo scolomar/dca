@@ -72,12 +72,12 @@ When you build a Docker image you normally need to go through the following proc
 1. Encapsulate the resulting artifact in a final Docker image
 
 You do not need to keep any of the intermediate results of these steps.
-For example after fetching the specific branch or release you want to deploy then you can remove the rest of the repository or even remove the software used to download the code from the remote repository.
+For example after fetching the specific branch or release then you can remove the rest of the repository or even the software used to download the code from the remote repository.
 After you have successfully compiled the code and created the final executable binary or Java artifact you can then remove the additional build tools as well as the libraries and dependencies used in the process.
-In the final Docker image that you are going to deploy in the production environment you only need the resulting artifact and the necessary dependencies.
+In the final Docker image that you are going to deploy in the production environment you only need the resulting artifact and any necessary dependencies.
 This way you are improving the security and performance of your final production image.
 The security is improved because you are reducing the attack surface when removing unnecessary software.
-The performance is improved because you are also reducing the number of layers and total size of the image.
+The performance is improved because you are reducing the number of layers and total size of the final image.
 
 In a multi-stage build your Dockerfile consists of several FROM instructions.
 Each FROM instruction will start the build of an intermediate image.
