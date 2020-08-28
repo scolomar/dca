@@ -83,8 +83,7 @@ In a multi-stage build your Dockerfile consists of several FROM instructions.
 Each FROM instruction will start the build of an intermediate image.
 The result of an intermediate image will be used in the next step removing any dependency used to generate that result.
 In the end you will have your small and secure final image ready for a production environment.
-
-Let us see an example of such a multi-stage build:
+Let us see an example of such a multi-stage build to containerize a Spring Boot Java application:
 ```
 FROM alpine/git AS clone
 WORKDIR /app
