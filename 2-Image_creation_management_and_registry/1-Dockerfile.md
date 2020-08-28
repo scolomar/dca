@@ -92,12 +92,12 @@ RUN git clone https://github.com/spring-projects/spring-petclinic.git
 
 FROM maven:alpine AS build
 WORKDIR /app
-COPY --from=clone /app/spring-petclinic /app
+COPY --from=clone /app/spring-petclinic .
 RUN mvn install && mv target/spring-petclinic-*.jar target/spring-petclinic.jar
 
 FROM openjdk:jre-alpine AS production
 WORKDIR /app
-COPY --from=build /app/target/spring-petclinic.jar /app
+COPY --from=build /app/target/spring-petclinic.jar .
 ENTRYPOINT ["java","-jar"]
 CMD ["spring-petclinic.jar"]
 ```
