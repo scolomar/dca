@@ -36,7 +36,7 @@ The virtual overlay network will use the physical underlay network to connect th
 This overlay network will allow communication from host to host and the corresponding local bridge network will handle the traffic inside the host machine to reach the target container.
 
 Overlay networks are created automatically when deploying an application with Docker Swarm but they can also be created manually with the command `docker network create`.
-They are absolutely necessary when running services in different host machines that need to communicate between them.
+They are absolutely necessary when we need to communicate services that are running in different host machines.
 
 #### Encryption
 
