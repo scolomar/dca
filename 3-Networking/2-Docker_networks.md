@@ -14,12 +14,12 @@ Only containers attached to the same network can talk to each other.
 Docker achieves this way a high level of security by default.
 
 The Linux bridge is not the only type of network available in Docker but it is the default type when creating a Docker network in a host machine.
-Let us suppose a simple 3-tierd example with a Tomcat frontend, a NodeJS-based API backend and a MySQL database all deployed in a standalone host machine.
+Let us suppose a simple 3-tierd example with an Apache web server frontend, a Tomcat backend and a MySQL database all deployed in a standalone host machine.
 For the application deployment let us create three different bridge networks: frontend, backend and database.
 Docker will create a separate Linux bridge for each network.
 By default there will be no connectivity through the three different networks because of the iptables isolation rules.
 
-If we want for example the Tomcat frontend to be able to talk the MySQL database then we need to attach both containers to the same network otherwise the communication will not be possible.
+If we want for example the Tomcat backend to be able to talk to the MySQL database then we need to attach both containers to the same network otherwise the communication will not be possible.
 We do not need to configure anything else.
 By default any two containers attached to the same network can freely talk to each other.
 There is no need to "publish" that port as a service.
