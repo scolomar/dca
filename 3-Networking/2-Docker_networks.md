@@ -3,7 +3,7 @@
 ### Section 2: Docker networks
 
 One of the main advantages of using Docker is the "batteries included" networking.
-Docker networking is more efficient and secure than Kubernetes networking and does not need to install any additional plugin: Docker networking is secure by default.
+Docker networking is very efficient and secure and does not need to install any additional plugin: Docker networking is secure by default.
 
 Docker uses Linux bridges to build the default Docker networks and virtual ethernet devices to connect different networks.
 One end of the veth pair is placed in one network and the other end is placed in another network.
