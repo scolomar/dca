@@ -71,9 +71,8 @@ Everything is transparently handled by Docker.
 
 Kubernetes works in a very similar way though the configuration of the Kubernetes compose file would be a bit more complex.
 Kubernetes has the same feature as Docker to handle the service traffic and transparent DNS resolution of service names.
-Docker is nevertheless monolithic but Kubernetes is modular.
-This implies that in Docker you can configure all the details in a service block of the Docker compose file.
-But in Kubernetes you need to separatedly configure several independent objects: at least two Deployments and two Services:
+Docker is nevertheless monolithic meanwhile Kubernetes is modular.
+This implies that in Docker you can configure all the details in a service block of the Docker compose file meanwhile in Kubernetes you need to separatedly configure several independent objects: at least two Deployments and two Services:
 ```
 apiVersion: apps/v1
 kind: Deployment
