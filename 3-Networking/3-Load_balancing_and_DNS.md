@@ -132,4 +132,4 @@ spec:
     microsvc: target-svc
 ```
 
-This is a nice example on how much easier is Docker in comparison to Kubernetes.
+This is a nice example on how much easier Docker is in comparison to Kubernetes.
