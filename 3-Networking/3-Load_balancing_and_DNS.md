@@ -62,6 +62,7 @@ services:
     image: nginx
     deploy:
       replicas: 3
+version: '3.8'
 ```
 
 We have deployed a total of 5 replicas: 2 replicas for the reverse proxy and another 3 replicas for the target microservice.
@@ -72,7 +73,7 @@ Everything is transparently handled by Docker.
 Kubernetes works in a very similar way though the configuration of the Kubernetes compose file will be a bit more complex.
 Kubernetes has the same features as Docker to handle the service traffic and transparent DNS resolution of service names.
 Docker is nevertheless monolithic meanwhile Kubernetes is modular.
-This implies that in Docker you can configure all the details in a service block of the Docker compose file meanwhile in Kubernetes you need to separatedly configure several independent objects (at least two Deployments and two Services):
+This implies that in Docker you can configure all the details in a service block of the Docker compose file meanwhile in Kubernetes you need to separatedly configure several independent objects (at least two Deployments and two Services). The following is a Kubernetes compose file functionally equivalent to the previous Docker compose file:
 ```
 apiVersion: apps/v1
 kind: Deployment
