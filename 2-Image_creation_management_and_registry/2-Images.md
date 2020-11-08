@@ -60,4 +60,4 @@ If we were using Kubernetes instead of Docker Swarm then we would use a similar 
 The basic difference between a Docker compose file and a Kubernetes compose file is that Docker compose is a unique file that describes the whole deployment meanwhile Kubernetes uses a set of configuration files that will independently describe different elements such as the network policy, the service and the deployment itself for example.
 All these different Kubernetes components are tied together through the use of labels.
 
-Those two files (Dockerfile and Docker compose file) are the key to successfully containerize any application.
+Those two files (Dockerfile and Docker compose file) are the key to successfully containerize any software application.
