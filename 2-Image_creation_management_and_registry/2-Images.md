@@ -46,7 +46,7 @@ The specific configuration will be provisioned when deploying in a specific envi
 
 Besides putting apart the configuration of the environment we will try to include as few elements as possible inside the image.
 We will avoid including binaries that could potentially be used by a hacker in a compromised container.
-If we need to compile our Java code with Maven or our C program with GNU C Compiler then we will not include those building tools in the final image that will be deployed in production.
-The less resources we have available in the production container the more secure it will be because of reducing the surface attack.
-Besides improving the container security it will also improve the performance of the containerized application since the less amount of content in the container image will improve the performance of the container filesystem.
+If we need to compile our Java code with Maven or our C program with the GNU C Compiler then we will not include those building tools in the final image that will be deployed in production.
+The less resources we have available in the production container the more secure it will be because of reducing the attack surface.
+Besides improving the container security this measure will also improve the performance of the containerized application since the less amount of content in the container image will improve the performance of the container filesystem.
 The key to remember is that fewer and thinner image layers will improve not only the security but also the performance of the final container.
