@@ -31,4 +31,22 @@ This same approach would be valid for any other interpreted language like PHP or
 
 If our application is written in C/C++ then we will need the compiled binaries together will all the necessary libraries and dependencies otherwise our application will not work.
 
-tbc
+So that our image should contain the necessary binaries, libraries and dependencies for our application to run.
+Nevertheless we do not want to hardcode our images.
+We will use external volumes or environment variables to provision any necessary configuration.
+For example tokens and passwords will not be included inside the image.
+Those elements will vary from one environment to another.
+Obviously the database password will be different in the development environment than in production.
+But we would like to use the same image in both environments.
+For that reason we would not like to include the database password hardcoded inside the image.
+Instead we could for example store the password in a Docker secret and provision that secret through an environment variable to the application container.
+This way we will use Docker secrets, configs, volumes and environment variables to provision specific configurations to the containers in order to avoid hardcoding our images.
+Therefore the same Docker image could be used in production or in the testing environment.
+The specific configuration will be provisioned when deploying in a specific environment.
+
+Besides putting apart the configuration of the environment we will try to include as few elements as possible inside the image.
+We will avoid including binaries that could potentially be used by a hacker in a compromised container.
+If we need to compile our Java code with Maven or our C program with GNU C Compiler then we will not include those building tools in the final image that will be deployed in production.
+The less resources we have available in the production container the more secure it will be because of reducing the surface attack.
+Besides improving the container security it will also improve the performance of the containerized application since the less amount of content in the container image will improve the performance of the container filesystem.
+The key to remember is that fewer and thinner image layers will improve not only the security but also the performance of the final container.
