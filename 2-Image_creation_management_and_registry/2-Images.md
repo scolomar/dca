@@ -50,3 +50,12 @@ If we need to compile our Java code with Maven or our C program with the GNU C C
 The less resources we have available in the production container the more secure it will be because of reducing the attack surface.
 Besides improving the container security this measure will also improve the performance of the containerized application since the less amount of content in the container image will improve the performance of the container filesystem.
 The key to remember is that fewer and thinner image layers will improve not only the security but also the performance of the final container.
+
+The Dockerfile will be the key to create and build our image where we will specify the final content of the image as well as the number and content of each layer.
+If there is any listening port in our application it will also be specified in the Dockerfile as well as any specific user or external volume that needs to be used.
+
+On the other hand it will be the Docker compose file the tool to configure the deployment of our image. 
+There we will specify arguments, volume configurations, Docker secret and configs, environment variables as well as any other circumstance that we want to include in the deployment of our containerized application.
+If we were using Kubernetes instead of Docker Swarm then we would use a similar Kubernetes compose file to describe the deployment.
+The basic difference between a Docker compose file and a Kubernetes compose file is that Docker compose is a unique file that describes the whole deployment meanwhile Kubernetes uses a set of independent configuration files that will independently describe different elements such as the network policy, the service and the deployment itself for example.
+All these different Kubernetes components are tied together through the use of labels.
