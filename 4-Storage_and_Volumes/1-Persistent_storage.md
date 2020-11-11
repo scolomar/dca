@@ -2,7 +2,7 @@
 
 ### Section 1: Persistent storage
 
-How does storage work inside a container?
+How does storage work for a container?
 
 The Docker image is the primary filesystem that will be available to the container.
 This means that any binary, library or dependency that any process running inside a container might need should be contained in the Docker image.
