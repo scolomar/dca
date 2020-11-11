@@ -9,7 +9,7 @@ This means that any binary, library or dependency that any process running insid
 But the Docker image is a read-only filesystem.
 How can then a process running inside a container write anything to the filesystem?
 For that purpose the container will mount a writable layer that will be superposed to this read-only image.
-This layer is normally stored in /var/lib/docker/containers and is therefore called the "container layer".
+This layer is normally called the "container layer".
 
 When a process running inside a container needs to modify, create or delete any file of the image filesystem then it will create a copy of the file inside the writable layer and then it will modify or delete that copy of the file instead of the original read-only version.
 This is what is called the Copy-on-Write (CoW) strategy.
@@ -39,7 +39,7 @@ This is called a Docker volume.
 
 A Docker volume is a filesystem totally independent of the Docker image and the container layer that will be mounted inside the container in a specified path.
 There are many types of Docker volumes.
-They will typically be located in the folder /var/lib/docker/volumes but they can also be located in any other path of the host machine or even in memory using the tmpfs mount.
+They can be located in any path of the host machine or even in memory using the tmpfs mount.
 Using specific volume plugins will even allow you to use external storage from the cloud, virtual platforms or many other available options from third party providers.
 In any case a Docker volume will allow you to avoid the Copy-on-Write system improving the I/O performance of the container.
 
