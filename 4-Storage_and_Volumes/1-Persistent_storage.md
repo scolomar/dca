@@ -34,8 +34,7 @@ It is normally considered a good practice to avoid the use of this Union Filesys
 For that purpose it is recommended to have as few read-only image layers as possible so as to reduce the burden of this superposition calculation.
 
 But sometimes it is absolutely necessary to write data to the filesystem like for example in the case of a database application such as MySQL or PostgreSQL.
-In these cases we will use a totally different object to circumvent the Union Filesystem.
-This is called a Docker volume.
+In these cases we will use a totally different object to circumvent the Union Filesystem: the Docker volume.
 
 A Docker volume is a filesystem totally independent of the Docker image and the container layer that will be mounted inside the container in a specified path.
 There are many types of Docker volumes.
