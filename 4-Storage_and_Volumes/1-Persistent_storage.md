@@ -60,5 +60,5 @@ In case you are using Kubernetes as your orchestrator then you need to consider 
 Each Pod can use the volumes defined so far that will be shared by the containers running inside the Pod and will persist the data even after the removal of the container.
 But if the Pod is removed then the volumes attached to the containers inside the Pod will also be removed.
 That is why Kubernetes has another object called PersistentVolume that is external to the Pod and will persist after the removal of the Pod.
-This is a specific issue of Kubernetes that needs to be taken into account so as not to confuse the persistence of the Volume outside the container and the persistence of the PersistentVolume outside the Pod.
+This is a specific issue of Kubernetes that needs to be taken into account so as not to confuse the persistence of the volume outside the container and the persistence of the PersistentVolume outside the Pod.
 
