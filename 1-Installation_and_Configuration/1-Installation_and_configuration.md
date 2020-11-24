@@ -28,4 +28,4 @@ One example of such a feature would be the possibility to mount a volume in memo
 This feature is only available in Linux.
 
 The management of the filesystem and how Docker works under the hood is also different in the case of Windows and Linux.
-It is true that Windows is providing with the Compute Service an equivalent set of features to mimic the Linux features concerning filesystems, control groups, namespaces and other operating system capabilities but this Compute Service will never be exactly the same because there are some Linux features that are just impossible to reproduce in a Windows operating system.
+It is true that Windows is providing with the Compute Service an equivalent set of features to mimic the Linux features concerning filesystems, control groups, namespaces and other operating system capabilities but this Compute Service will never be exactly the same as its Linux counterpart because there are some Linux features that are just impossible to reproduce in a Windows operating system.
