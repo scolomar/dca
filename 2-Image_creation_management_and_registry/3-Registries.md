@@ -13,14 +13,16 @@ Many customers are though migrating to a sort of managed registry so that it rem
 I personally think that letting the registry be hosted somewhere in the cloud relieves the operations team from an unnecessary burden.
 Each customer will have a different use case that needs to be analized before taking an architectural design decision.
 
-The main advantages of a Docker registry is that you will be able to pull your Docker image from your environment.
-The worker nodes in the production environment will download the Docker images to be used by the containers.
-The same thing applies for the development environment.
+The main advantage of a Docker registry is that you will be able to pull your Docker image from any environment.
+You do not need to build your Docker images in the worker nodes.
+You will instead use some kind of automation tool like Jenkins to build the Docker image in a build server and then push that image to the Docker registry.
+The worker nodes will then download the Docker images from the Docker registry.
+The same principle applies for both development and production environments.
 
 It is important to understand that it is not possible for the manager nodes to transfer the Docker images to the worker nodes.
-The managers will normally provide the worker nodes with the necessary Docker secrets and configs as well as other metadata and control management data but Docker images are too heavy to be transfered this way.
-Each worker node will download the Docker images they need for the containers they are running.
-In this sense the Docker registry will prove very useful as a remote service that will provide the necessary Docker images for the worker nodes.
+The managers will normally provide the worker nodes with the necessary Docker secrets and configs as well as other metadata and control management data but Docker images are too heavy to be transferred this way.
+Each worker node will instead download the Docker images they need for the containers they are running.
+In this sense the Docker registry will prove to be very useful as a remote service that will provide the necessary Docker images for the worker nodes.
 
 Typically customers have more than one Docker registry.
 It is considered a good practice to have at least one Docker registry for production and a different for development and testing.
