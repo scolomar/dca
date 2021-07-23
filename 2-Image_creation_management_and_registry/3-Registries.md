@@ -24,8 +24,8 @@ The managers will normally provide the worker nodes with the necessary Docker se
 Each worker node will instead download the Docker images they need for the containers they are running.
 In this sense the Docker registry will prove to be very useful as a remote service that will provide the necessary Docker images for the worker nodes.
 
-Typically customers have more than one Docker registry.
-It is considered a good practice to have at least one Docker registry for production and a different for development and testing.
+Typically customers deploy more than one Docker registry.
+It is considered a good practice to have at least one Docker registry for production and a different one for development and testing.
 The reason behind this approach is to ensure that no unexpected activity in the Docker registry might make it unavailable to the production business.
 
 Enabling the cache will also improve the speed of the download process which might otherwise take too long in certain deployments depending on the size of the Docker images.
