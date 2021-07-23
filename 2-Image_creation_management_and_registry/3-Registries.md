@@ -30,6 +30,6 @@ Enabling the cache will also improve the speed of the download process which mig
 It is important to correctly tag the Docker images so as to avoid that the cache will prevent from downloading the correct version of the software.
 I have witnessed some cases where the customer was incorrectly using a cached version of the Docker image instead of the new release because of a wrong tag implementation.
 
-Though it is part of a different process I would also like to mention here that it is important to check the Dockerfile.
-If the Dockerfile is poorly designed the build process might reuse cached layers instead of building a new Docker image using the code of the new release. 
+Though it is part of a different process I would also like to mention here the importance of checking the Dockerfile template.
+If the Dockerfile is poorly designed the build process might reuse cached layers instead of building a brand new Docker image. 
 That would therefore result in a Docker container running an outdated version of the software.
