@@ -27,16 +27,16 @@ The digest is created by a cryptographic function and cannot be modified without
 The safest way to pull an image for our containers is to specify the digest together with the name and location.
 
 I will tell an anecdote that could be useful to understand this feature. 
-In Docker Hub images are regularly updated to apply security fixes. 
+Images in Docker Hub are regularly updated to apply security fixes. 
 After those fixes are applied the release number is typically not modified.
 Two years ago it happened to one of my customers that they deployed a container in production which depended on an image which was pulled from Docker Hub.
 Only the release name was specified in the deployment manifest but not the digest.
 As a result, the security fixes that were applied that week to the Docker image made some changes that broke the production deployment of my customer.
 The business was stopped for a few hours until we found out the root cause of the problem.
-The same deployment manifest that perfectly worked the previous week now failed when deployed.
-No changes had been made but a new pull caused the download of the modified Docker image though the realease version was identical.
+The same deployment manifest that perfectly worked the previous week now failed.
+No changes had been made but a new pull caused the download of the modified Docker image but the realease version was identical.
 Since then I always specify the digest in the templates and manifests.
-The digest is mathematically impossible to forge or tamper with.
+The digest is mathematically impossible to be forged or tampered with.
 Any change of a single character in the content of the Docker image would cause a totally different digest.
 It will protect not only from malicious attacks but also from mistakenly modifying the content or pointing to a wrong image.
 
