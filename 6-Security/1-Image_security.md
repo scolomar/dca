@@ -33,7 +33,7 @@ Two years ago it happened to one of my customers that they deployed a container 
 Only the release name was specified in the deployment manifest but not the digest.
 As a result, the security fixes that were applied that week to the Docker image made some changes that broke the production deployment of my customer.
 The business was stopped for a few hours until we found out the root cause of the problem.
-The same deployment manifest that perfectly worked the previous week now failed when deployed again.
+The same deployment manifest that perfectly worked the previous week now failed when deployed.
 No changes had been made but a new pull caused the download of the modified Docker image though the realease version was identical.
 Since then I always specify the digest in the templates and manifests.
 The digest is mathematically impossible to forge or tamper with.
