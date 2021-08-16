@@ -19,7 +19,7 @@ Regarding the libaries, binaries and dependencies we need to check that all the 
 It is typical to use Docker images that contain packages which are outdated or lack the necessary security patches.
 There are some external tools that regularly check the content of the Docker images and trigger a warning when they find security threats.
 
-Another important threat to take into consideration is the possibility to tamper the content of the Docker image.
+Another important threat to take into consideration is the possibility to modify the content of the Docker image.
 Some malicious attacker or just an operator by mistake can modify the content of the Docker image so that what we are going to deploy in our production servers is not what was supposed to be.
 To avoid this problem there are some commercial solutions that will even cryptographically sign the content of the image in order to verify its integrity.
 A simple but very effective approach is to use the digest when referring the Docker images.
