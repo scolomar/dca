@@ -10,7 +10,6 @@ One container can be attached to as many networks as needed so that communicatio
 In a three tier architecture we can place for example a frontend container attached to a frontend network and a middleware container attached to the backend network.
 The database container will also be attached to the backend network meanwhile the middleware container will be attached to both networks: the frontend and the backend.
 This way the frontend can talk to the middleware but not to the database. Only the middleware will be able to talk to the database because they are attached to the same backend network.
-
 An example of such an architecture could be an Apache Web server as a frontend, a Tomcat server as a middleware and a MySQL server as a database.
 
 A different situation arises when we are using Kubernetes. 
