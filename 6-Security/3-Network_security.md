@@ -1,0 +1,19 @@
+## Chapter 6: Security
+
+### Section 1: Network security
+
+Docker networks are secure by default.
+
+Docker networks are fully isolated by default. Therefore we cannot communicate two running containers unless they are attached to the same network.
+One container can be attached to as many networks as needed so that communication an security are both guaranteed when using Docker networks.
+
+In a three tier architecture we can place for example a frontend container attached to a frontend network and a middleware container attached to the backend network.
+The database container will also be attached to the backend network meanwhile the middleware container will be attached to both networks: the frontend and the backend.
+This way the frontend can talk to the middleware but not to the database. Only the middleware will be able to talk to the database because they are attached to the same backend network.
+
+An example of such an architecture could be an Apache Web server as a frontend, a Tomcat server as a middleware and a MySQL server as a database.
+
+A different situation arises when we are using Kubernetes. 
+The Kubernetes network is flat by definition. Therefore Kubernetes networks are not secure by default.
+We need to ensure the security of the Kubernetes flat network by applying Network Policies. 
+Without the use of a Network Policy any container running inside a Pod can talk by default to any other container running inside another Pod if they are both in the same Kubernetes cluster.
