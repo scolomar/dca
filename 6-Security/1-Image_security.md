@@ -26,7 +26,6 @@ A simple but very effective approach is to use the digest when referring the Doc
 The digest is created by a cryptographic function and cannot be modified without being detected.
 The safest way to pull an image for our containers is to specify the digest together with the name and location.
 
-I will tell an anecdote that could be useful to understand this feature. 
 Images in Docker Hub are regularly updated to apply security fixes. 
 After those fixes are applied the release number is typically not modified.
 Two years ago it happened to one of my customers that they deployed a container in production which depended on an image which was pulled from Docker Hub.
