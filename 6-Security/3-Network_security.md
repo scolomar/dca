@@ -5,7 +5,7 @@
 Docker networks are secure by default.
 
 Docker networks are fully isolated by default. Therefore we cannot communicate two running containers unless they are attached to the same network.
-One container can be attached to as many networks as needed so that communication an security are both guaranteed when using Docker networks.
+One container can be attached to as many networks as needed so that communication and security are both guaranteed when using Docker networks.
 
 In a three tier architecture we can place for example a frontend container attached to a frontend network and a middleware container attached to the backend network.
 The database container will also be attached to the backend network meanwhile the middleware container will be attached to both networks: the frontend and the backend.
