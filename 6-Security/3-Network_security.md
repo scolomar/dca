@@ -12,7 +12,7 @@ The database container will only be attached to the backend network: this way th
 The frontend will only be able to talk to the middleware but not to the database because they are in different networks. 
 An example of such an architecture could be an Apache Web server as a frontend, a Tomcat server as a middleware and a MySQL server as a database.
 
-A different situation arises when we are using Kubernetes. 
+A different situation arises when using Kubernetes. 
 The Kubernetes network is flat by definition. Therefore Kubernetes networks are not secure by default.
 We need to ensure the security of the Kubernetes flat network by applying Network Policies. 
 Without the use of a Network Policy any container running inside a Pod can talk by default to any other container running inside another Pod if they are both in the same Kubernetes cluster.
