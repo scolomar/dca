@@ -12,4 +12,4 @@ There are many good reasons for keeping this folder in a separated partition:
 3. It might provide better security and even performance if the permissions and mounting options are properly configured.
 
 The /var/lib/docker/swarm folder specificallly contains all the information regarding the Docker Swarm cluster as well as any object deployed or configured in the cluster.
-If you keep a backup of this folder you can recover from a cluster disaster just restoring the folder on a new node and recreating a new cluster with the backuped data.
+If you keep a backup of this folder you can recover from a cluster disaster just restoring the folder on a new node and recreating a new cluster with the backup data.
