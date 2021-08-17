@@ -11,7 +11,8 @@ Many users opt out of this option and prefer to implement Continuous Delivery in
 In this case the final deployment needs to be manually approved avoiding the automatic deployment of new code to the production environment.
 
 In order to implement a CI/CD pipeline you need to consider the following process:
-1. Build an image with the new code and push it to the registry.
+
+#### 1. Build an image with the new code and push it to the registry.
 
    Once the new code is developed and committed you need to test it.
    For that purpose you will create an image that will contain the code you want to test together with all the necessary dependencies.
@@ -55,7 +56,8 @@ In order to implement a CI/CD pipeline you need to consider the following proces
    We will easily migrate the same exact image from one environment to another modifying only the content of the different configuration objects.
    For example the secret containing the database credentials will be different in the testing and the production environments but the image using this secret will be exactly the same.
    This will ensure that the image that has passed the tests and been promoted for delivery is exactly the same image that will be deployed in production.
-1. Test the image.
+
+#### 2. Test the image.
 
    Now you need to deploy your application using the image with the new code release you want to test.
    In this case you will again use another manifest: the compose file (Docker compose or Kubernetes manifest depending on the orchestrator of your choice).
@@ -82,7 +84,8 @@ In order to implement a CI/CD pipeline you need to consider the following proces
    When this is not an option in order to avoid the extra cost of building a separated registry then the digest associated with the tagged image should be enough to ensure a safe deployment.
    We would highly recommend the use of digests to reference the images instead of just relying on the tag.
    The digest is based on a secure cryptographic hash of the image file and guarantees that the production image has not be tampered with or mistakenly retagged.
-1. Deploy the image in production.
+
+#### 3. Deploy the image in production.
 
    Once the image has been promoted and the deployment has been approved we will deploy the new code release in production.
    We will again use a Docker compose manifest (or a Kubernetes manifest if that were our choice).
