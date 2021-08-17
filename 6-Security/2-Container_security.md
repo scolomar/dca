@@ -11,9 +11,9 @@ This simple feature will dramatically improve the security of our containers.
 The performance will also benefit from this approach since we will avoid the superposition of the filesystem layers which affects both the container and image layers.
 
 You may nevertheless ask: how is it possible to make a container non-writable? Normally almost any application needs to write something to the filesystem sooner or later.
-How do we handle that situation? That is the purpose of the volumes.
+How do we handle that situation?
 
-In principle we had the Docker images that were immutable and the Docker containers that were writable by default.
+In principle we have the Docker images that are immutable and the Docker containers that are writable by default.
 How do our applications write to the filesystem if we make the container also immutable?
 The answer to this question is the Docker volume.
 
