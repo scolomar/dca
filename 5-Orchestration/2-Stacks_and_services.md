@@ -1,6 +1,6 @@
 ## Chapter 5: Orchestration
 
-### Section 1: Stacks and services
+### Section 2: Stacks and services
 
 Once you have your cluster up and running you can deploy your business application.
 A stack is a pile of microservices that will compose your containerized application.
@@ -31,9 +31,9 @@ This approach will allow the developer to use in his laptop or testing environme
 When you want to deploy a containerized application you need three main manifests:
 1. The first one is the manifest to create your infrastructure.
 You can use CloudFormation templates for AWS, Azure Resource Manager templates, Google Cloud templates, Vagrant, Terraform, Openstack or any other kind of template to deploy your infrastructure in the provider of your choice. Be it on premises or in the cloud.
-1. Once you have set up the infrastructure then you will need to define the Dockerfile that will encapsulate your software inside a Docker image.
+2. Once you have set up the infrastructure then you will need to define the Dockerfile that will encapsulate your software inside a Docker image.
 In this manifest you will execute all the necessary commands to ensure your application is correctly set up and configured as well as all the necessary dependencies are present in the resulting image.
-1. The last step is to configure the Docker compose file where you configure the deployment of your containerized application.
+3. The last step is to configure the Docker compose file where you configure the deployment of your containerized application.
 In this last manifest you describe all the necessary objects for the correct execution of your application like config files and secrets, volumes and networks.
 
 In the Docker compose file you define how to deploy the Docker images that you have built following the Dockerfile manifest on top of the infrastructure you have built following the CloudFormation or Terraform template of your choice.
@@ -68,17 +68,18 @@ Given the limited size for the Docker configs and secrets we will use volumes wh
 
 Volumes will be used for any of these use cases:
 1. To provision any configuration to the containers that does not fit in a Docker config or secret.
-1. To mount an external filesystem inside the container.
+2. To mount an external filesystem inside the container.
+
 The reasons for doing so vary depending on the specific circumstances.
 You could be for example interested in bypassing the copy-on-write system of the merged union filesystem of the container.
 Or you could maybe interested in having property of a subfolder for security reasons (like when mounting /var/run in an external volume for example).
 1. To have a persistent volume outside the lifecycle of the container to store for example a database.
-1. To share data between containers.
-1. Any other legitimate reason to use a volume as an external filesystem mounted inside the container.
+2. To share data between containers.
+3. Any other legitimate reason to use a volume as an external filesystem mounted inside the container.
 
 Volumes are defined in the Docker compose file twice:
 1. In the volume definition itself.
-1. In the description of the container where it is specified the path where to mount the volume inside the container.
+2. In the description of the container where it is specified the path where to mount the volume inside the container.
 
 There is little difference between the Docker compose file and the Kubernetes manifest for the Deployment object. Both of them have similar specifications.
 
