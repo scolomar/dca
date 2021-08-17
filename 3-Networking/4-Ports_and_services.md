@@ -18,7 +18,7 @@ The service will also act as a virtual load balancer that will regularly check t
 The traffic will therefore only be forwarded to healthy container instances of the specified service.
 
 By default the Docker service will only attend internal requests coming from another container in the same Docker network.
-If we want to publish our Docker service so as to also serve external requests coming from a external network then we need to modify the default configuration.
+If we want to publish our Docker service so as to also serve external requests coming from an external network then we need to modify the default configuration.
 We need to publish the port of the host machine that will be mapped to the port of the running container.
 With this configuration any request coming from the external network to a port of the host machine will be forwarded to the corresponding port of the container if properly mapped and published.
 
