@@ -12,7 +12,7 @@ This is a great solution in order to ensure for example the availability of an o
 The service will hold a virtual IP and the traffic will be forwarded to the different instances of the service that will hold their own private IP.
 You do not even need to know the virtual IP of the service or the private IP of the target container.
 There will be native DNS resolution of the Docker service into its virtual IP if the container that wants to consume the service is attached to the same Docker network as the target.
-You nevertheless need to point to the correct port when you try to query the service like for example http://myservice:8080.
+You nevertheless need to point to the correct port when trying to query the service like for example http://myservice:8080.
 
 The service will also act as a virtual load balancer that will regularly check the health of the target containers and discard those which are not ready.
 The traffic will therefore only be forwarded to healthy container instances of the specified service.
