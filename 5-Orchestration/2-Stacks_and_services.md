@@ -72,7 +72,7 @@ Volumes will be used for any of these use cases:
 
 The reasons for doing so vary depending on the specific circumstances.
 You could be for example interested in bypassing the copy-on-write system of the merged union filesystem of the container.
-Or you could maybe interested in having property of a subfolder for security reasons (like when mounting /var/run in an external volume for example).
+Or you could maybe interested in having property of a subfolder for security reasons (like when mounting /var/run in an external volume for example):
 1. To have a persistent volume outside the lifecycle of the container to store for example a database.
 2. To share data between containers.
 3. Any other legitimate reason to use a volume as an external filesystem mounted inside the container.
