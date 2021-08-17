@@ -20,7 +20,7 @@ The approach typically used by many customers is to have the three managers runn
 This way they will be able to deploy Windows and Linux applications on their container platform.
 
 It is impossible to run a Windows container on a Linux worker.
-But it is nevertheless possible to run a Linux container on a Windows server.
+But it is though possible to run a Linux container on a Windows server.
 The reason is that Windows server has a Linux Kernel embedded in the Windows operating system allowing this way to run both type of containers on a Windows machine: Linux and Windows containers.
 It is nevertheless recommended to run Linux applications on a Linux machine because of some security and other features that are only available in the Linux operating system.
 One example of such a feature is the possibility to mount a volume in memory on a tmpfs filesystem: this feature is only available in Linux.
