@@ -4,7 +4,7 @@
 
 It is important to keep a backup of your Docker container platform.
 It is in general recommended to have a separated partition for /var/lib/docker folder.
-This folder contains all the information about your Docker objects and their configurations including containers, images, volumes and networks.
+This folder contains all the information about your Docker objects and their configurations including containers, images, volumes, networks and any other Docker object.
 
 There are many good reasons for keeping this folder in a separated partition:
 1. It might run out of disk space and therefore block your Docker deployment.
