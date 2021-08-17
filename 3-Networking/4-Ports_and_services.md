@@ -20,7 +20,7 @@ The traffic will therefore only be forwarded to healthy container instances of t
 By default the Docker service will only attend internal requests coming from another container in the same Docker network.
 If we want to publish our Docker service so as to also serve external requests coming from an external network then we need to modify the default configuration.
 We need to publish the port of the host machine that will be mapped to the port of the running container.
-With this configuration any request coming from the external network to a port of the host machine will be forwarded to the corresponding port of the container if properly mapped and published.
+With this configuration any request coming from the external network to a specific port of the host machine will be forwarded to the corresponding port of the container if properly mapped and published.
 
 For example an Apache Web container will be able to communicate with port 8080 of the Tomcat container only available through the internal Docker network.
 At the same time we may publish port 80 of the host machine that will be mapped to port 80 of the Apache container so as to allow external access to the Apache web service.
