@@ -7,6 +7,7 @@ When we create a service it will imply one or more containers running the same t
 
 For example a web service may consist of a hundred instances of Apache Web server with exactly the same configuration.
 When there is a request for the web service it will be forwarded to any of the available instances that will process the request and answer it.
+That is a great solution in order to ensure for example the availability of an online shop during Black Friday or a voting website during election period.
 
 The service will hold a virtual IP and the traffic will be forwarded to the different instances of the service that will hold their own private IP.
 The service will act as a virtual load balancer that will regularly check the health of the target containers and discard those which are not ready.
