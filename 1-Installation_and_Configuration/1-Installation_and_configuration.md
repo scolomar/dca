@@ -27,3 +27,10 @@ One example of such a feature is the possibility to mount a volume in memory on 
 
 The management of the filesystem and how Docker works under the hood is also different in the case of Windows and Linux.
 It is true that Windows is providing with the Compute Service an equivalent set of features to mimic the Linux features concerning filesystems, control groups, namespaces and other Linux operating system capabilities but this Compute Service will never be exactly the same as its Linux counterpart because there are some Linux features that are just impossible to reproduce in a Windows operating system.
+
+### Exercise:
+
+In order to install Docker engine on your machine you need to follow this documentation:
+- https://docs.docker.com/engine/install/
+
+It can be something as easy as running ```sudo apt-get install docker.io``` though the exact process will depend on the Docker version you want to download and the operating system that is actually running on your machine.
