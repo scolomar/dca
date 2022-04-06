@@ -63,7 +63,8 @@ I would highly recommend to set up cgroups for any container that is going to be
 ### Exercise:
 Open a terminal in any Linux system and run the following command:
 ```
-cat /proc/1/cgroup
+pid=1
+cat /proc/${pid}/cgroup
 ```
 The output will be similar to the following:
 ```
@@ -83,7 +84,10 @@ This result shows that process with PID 1 belongs to the control group / (root/g
 Any other application running non-containerized on the same machine will show the same result. 
 Like for example:
 ```
-$ cat /proc/9926/cgroup
+pid=9926
+cat /proc/${pid}/cgroup
+```
+```
 11:pids:/
 10:devices:/
 9:memory:/
