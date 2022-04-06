@@ -59,3 +59,40 @@ Given that containers launch system calls directly to the host kernel there is n
 Namespaces ensure the isolation of some operating system resources such as filesystem mount points, hostname, network stack or PID but it does not limit the usage of memory, disk or CPU.
 In order to control the usage of physical resources we need to configure the control groups or cgroups for that container.
 I would highly recommend to set up cgroups for any container that is going to be used in a production environment.
+
+### Exercise:
+Open a terminal in any Linux system and run the following command:
+```
+cat /proc/1/cgroup
+```
+The output will be similar to the following:
+```
+11:pids:/
+10:devices:/
+9:memory:/
+8:hugetlb:/
+7:cpuset:/
+6:cpu,cpuacct:/
+5:blkio:/
+4:net_cls,net_prio:/
+3:freezer:/
+2:perf_event:/
+1:name=systemd:/
+```
+This result shows that process with PID 1 belongs to the control group / (root/global).
+Any other application running non-containerized on the same machine will show the same result. 
+Like for example:
+```
+$ cat /proc/9926/cgroup
+11:pids:/
+10:devices:/
+9:memory:/
+8:hugetlb:/
+7:cpuset:/
+6:cpu,cpuacct:/
+5:blkio:/
+4:net_cls,net_prio:/
+3:freezer:/
+2:perf_event:/
+1:name=systemd:/
+```
