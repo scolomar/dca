@@ -111,7 +111,7 @@ This tiny image will be deployed in production maximizing the security and perfo
 This is obviously only an example.
 Your use case might need more complex stages or dependencies to run the final artifact in the production environment.
 
-### Exercise
+## Exercise
 Let us consider the following PHP code:
 ```
 <?php phpinfo();?>
