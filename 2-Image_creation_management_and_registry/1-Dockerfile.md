@@ -149,7 +149,8 @@ After the build is successful we can check that the image contains the PHP binar
 docker run --entrypoint which --rm mylibrary/test-image:latest php
 docker run --entrypoint php --rm mylibrary/test-image:latest -v
 ```
-We can also inspect the layers that form the final Docker image:
+We can also inspect the layers that form the final Docker image.
+There will be one layer per each meaningful line of the Dockerfile:
 ```
 docker inspect mylibrary/test-image:latest | grep Layers -A4
 ```
