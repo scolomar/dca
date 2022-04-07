@@ -60,7 +60,7 @@ Namespaces ensure the isolation of some operating system resources such as files
 In order to control the usage of physical resources we need to configure the control groups or cgroups for that container.
 I would highly recommend to set up cgroups for any container that is going to be used in a production environment.
 
-### Exercise:
+## Exercise:
 Open a terminal in any Linux system and run the following command:
 ```
 pid=1
