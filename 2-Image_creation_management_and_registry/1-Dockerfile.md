@@ -125,8 +125,8 @@ And we will be able to check the running service with the following command:
 ```
 curl localhost:8080
 ```
-In order to containerize this application we need to create a Docker image that will contain the libraries and dependencies needed to execute this application.
-We will obviously need the PHP binaries and dependencies.
+In order to containerize this application we need to create a Docker image that will contain all the necessary libraries and dependencies.
+We will obviously need the PHP binaries.
 We can download a Docker image containing those binaries or we can prepare an image installing the necessary libraries.
 We can for example start from a base Debian image and install the necessary packages. 
 For that purpose we will create a Dockerfile that is like a script that will be run to create our Docker image.
