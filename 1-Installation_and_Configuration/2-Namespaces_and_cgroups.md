@@ -68,35 +68,67 @@ cat /proc/${pid}/cgroup
 ```
 The output will be similar to the following:
 ```
-11:pids:/
-10:devices:/
-9:memory:/
+11:perf_event:/
+10:memory:/
+9:freezer:/
 8:hugetlb:/
-7:cpuset:/
+7:devices:/
 6:cpu,cpuacct:/
-5:blkio:/
-4:net_cls,net_prio:/
-3:freezer:/
-2:perf_event:/
+5:net_cls,net_prio:/
+4:blkio:/
+3:pids:/
+2:cpuset:/
 1:name=systemd:/
 ```
 This result shows that process with PID 1 belongs to the control group / (root/global).
-Any other application running non-containerized on the same machine will show the same result. 
+Any other non-containerized application running on the same machine will show a similar result. 
 Like for example:
 ```
-pid=9926
-cat /proc/${pid}/cgroup
+cat /proc/$$/cgroup
 ```
 ```
-11:pids:/
-10:devices:/
-9:memory:/
+11:perf_event:/
+10:memory:/
+9:freezer:/
 8:hugetlb:/
-7:cpuset:/
+7:devices:/
 6:cpu,cpuacct:/
-5:blkio:/
-4:net_cls,net_prio:/
-3:freezer:/
-2:perf_event:/
-1:name=systemd:/
+5:net_cls,net_prio:/
+4:blkio:/
+3:pids:/
+2:cpuset:/
+1:name=systemd:/user.slice/user-1000.slice/session-4268.scope
+```
+These results basically mean that the Linux operating system by default separates the Kernel resources in control groups and namespaces. Each process running on this Linux machine will be assigned a control group which can be checked under the location ```/proc/PID/cgroup```. This feature was available in the Linux Kernel many years before Docker was developed. This set of namespaces and control groups is what we call a "container". The container assigned by default to any process running on a Linux machine is sometimes called the global or root container. Docker uses this same technology in order to set up local Docker containers (nested namespaces of the global root namespace).
+
+Let us see the difference between this global container and a local Docker container. For this purpose let us run the following command:
+```docker run --detach --entrypoint ping --name test --rm --tty library/busybox:latest localhost```.
+Now we can check the process running inside this container and the control group assigned to it:
+```
+cat /proc/$( sudo docker top test | awk '!/PID/{ print $2 }' )/cgroup
+```
+The result shows the control group assigned to our process which coincides with Docker container ID:
+```
+11:perf_event:/docker/a0870498d3b51140843b89f349e7d77ada7852f86fccf63cfa6169df083592f8
+10:memory:/docker/a0870498d3b51140843b89f349e7d77ada7852f86fccf63cfa6169df083592f8
+9:freezer:/docker/a0870498d3b51140843b89f349e7d77ada7852f86fccf63cfa6169df083592f8
+8:hugetlb:/docker/a0870498d3b51140843b89f349e7d77ada7852f86fccf63cfa6169df083592f8
+7:devices:/docker/a0870498d3b51140843b89f349e7d77ada7852f86fccf63cfa6169df083592f8
+6:cpu,cpuacct:/docker/a0870498d3b51140843b89f349e7d77ada7852f86fccf63cfa6169df083592f8
+5:net_cls,net_prio:/docker/a0870498d3b51140843b89f349e7d77ada7852f86fccf63cfa6169df083592f8
+4:blkio:/docker/a0870498d3b51140843b89f349e7d77ada7852f86fccf63cfa6169df083592f8
+3:pids:/docker/a0870498d3b51140843b89f349e7d77ada7852f86fccf63cfa6169df083592f8
+2:cpuset:/docker/a0870498d3b51140843b89f349e7d77ada7852f86fccf63cfa6169df083592f8
+1:name=systemd:/docker/a0870498d3b51140843b89f349e7d77ada7852f86fccf63cfa6169df083592f8
+```
+We get the same ID when we check the Docker containers folder or use the Docker client command:
+```
+$ sudo ls /var/lib/docker/containers -l
+total 0
+drwx--x--- 4 root root 237 Apr  7 03:10 a0870498d3b51140843b89f349e7d77ada7852f86fccf63cfa6169df083592f8
+```
+```
+$ sudo docker ps --no-trunc
+CONTAINER ID                                                       IMAGE                    COMMAND            CREATED         STATUS         PORTS     NAMES
+a0870498d3b51140843b89f349e7d77ada7852f86fccf63cfa6169df083592f8   library/busybox:latest   "ping localhost"   4 minutes ago   Up 4 minutes             test
 ```
