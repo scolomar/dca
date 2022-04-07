@@ -99,10 +99,12 @@ cat /proc/$$/cgroup
 2:cpuset:/
 1:name=systemd:/user.slice/user-1000.slice/session-4268.scope
 ```
-These results basically mean that the Linux operating system by default separates the Kernel resources in control groups and namespaces. Each process running on this Linux machine will be assigned a control group which can be checked under the location ```/proc/PID/cgroup```. This feature was available in the Linux Kernel many years before Docker was developed. This set of namespaces and control groups is what we call a "container". The container assigned by default to any process running on a Linux machine is sometimes called the global or root container. Docker uses this same technology in order to set up local Docker containers (nested namespaces of the global root namespace).
+These results basically mean that the Linux operating system by default separates the Kernel resources in control groups and namespaces. Each process running on the Linux system will be assigned a control group which can be checked under the location ```/proc/PID/cgroup```. This feature was available in the Linux Kernel many years before Docker was developed. This set of namespaces and control groups is what we call a "container". The container assigned by default to any process running on a Linux machine is sometimes called the global or root container. Docker uses this same technology in order to set up local Docker containers (nested namespaces of the global root namespace).
 
 Let us see the difference between this global container and a local Docker container. For this purpose let us run the following command:
-```docker run --detach --entrypoint ping --name test --rm --tty library/busybox:latest localhost```.
+```
+docker run --detach --entrypoint ping --name test --rm --tty library/busybox:latest localhost
+```
 Now we can check the process running inside this container and the control group assigned to it:
 ```
 cat /proc/$( sudo docker top test | awk '!/PID/{ print $2 }' )/cgroup
