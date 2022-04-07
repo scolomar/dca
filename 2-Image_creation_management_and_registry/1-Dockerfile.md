@@ -149,6 +149,10 @@ After the build is successful we can check that the image contains the PHP binar
 docker run --entrypoint which --rm mylibrary/test-image:latest php
 docker run --entrypoint php --rm mylibrary/test-image:latest -v
 ```
+We can also inspect the layers that form the final Docker image:
+```
+docker inspect mylibrary/test-image:latest | grep Layers -A4
+```
 We could have used Alpine base image instead of Debian:
 ```
 tee Dockerfile 0<<EOF
