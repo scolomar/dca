@@ -110,3 +110,48 @@ This tiny image will be deployed in production maximizing the security and perfo
 
 This is obviously only an example.
 Your use case might need more complex stages or dependencies to run the final artifact in the production environment.
+
+### Exercise
+Let us consider the following PHP code:
+```
+<?php phpinfo();?>
+```
+This example is very simple but the problem will have a similar solution even if we have to deal with thousands of lines of code instead of a single one.
+This application will be executed the following way in case of not using containerization:
+```
+php -f index.php -S localhost:8080
+```
+And we will be able to check the running service with the following command:
+```
+curl localhost:8080
+```
+In order to containerize this application we need to create a Docker image that will contain the libraries and dependencies needed to execute this application.
+We will obviously need the PHP binaries and dependencies.
+We can download a Docker image containing those binaries or we can prepare an image installing the necessary libraries.
+We can for example start from a base Debian image and install the necessary packages. 
+For that purpose we will create a Dockerfile that is like a script that will be run to create our Docker image.
+Each line of the Dockerfile will be a new layer for our Docker image containing a set of binaries and dependencies:
+```
+tee Dockerfile 0<<EOF
+FROM library/debian:latest
+RUN apt-get update && apt-get install -y php
+EOF
+```
+In order to create the image from this Dockerfile we will run the following command:
+```
+docker build --tag mylibrary/test-image:latest .
+```
+The ```build``` subcommand will call Docker engine to execute the instructions from the Dockerfile inside ephemeral containers in order to create the constituent layers of the immutable Docker image.
+The ```tag``` option will provide a unique name to our Docker image and the final dot is necessary to specify the location of the build context where the Dockerfile is located.
+After the build is successful we can check that the image contains the PHP binaries with the following commands:
+```
+docker run --entrypoint which --rm mylibrary/test-image:latest php
+docker run --entrypoint php --rm mylibrary/test-image:latest -v
+```
+We could have used Alpine base image instead of Debian:
+```
+tee Dockerfile 0<<EOF
+FROM library/alpine:latest
+RUN apk add php
+EOF
+```
