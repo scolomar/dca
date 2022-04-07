@@ -135,6 +135,7 @@ Each line of the Dockerfile will be a new layer for our Docker image containing 
 tee Dockerfile 0<<EOF
 FROM library/debian:latest
 RUN apt-get update && apt-get install -y php
+RUN echo '<?php phpinfo();?>' | tee index.php
 EOF
 ```
 In order to create the image from this Dockerfile we will run the following command:
@@ -153,5 +154,14 @@ We could have used Alpine base image instead of Debian:
 tee Dockerfile 0<<EOF
 FROM library/alpine:latest
 RUN apk add php
+RUN echo '<?php phpinfo();?>' | tee index.php
 EOF
+```
+Now we can run a container using this Docker image:
+```
+docker run --detach --entrypoint php --name phpinfo --rm mylibrary/test-image:latest -f index.php -S localhost:8080
+```
+We can test the result with the following command:
+```
+docker exec phpinfo wget localhost:8080 -O - -q | grep '<title>PHP'
 ```
