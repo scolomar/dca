@@ -28,3 +28,5 @@ It also provides an excellent functionality both in terms of stability and capac
 
 To use Docker Swarm you do not need anything else than the core Docker engine. 
 Without installing any other software you can enable the Swarm mode to provide orchestrating capabilities to your container deployment getting practically the same functionality as a Kubernetes cluster but consuming much less resources and definitely easier to configure.
+
+## Exercise
