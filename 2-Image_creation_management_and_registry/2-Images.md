@@ -61,3 +61,90 @@ The basic difference between a Docker compose file and a Kubernetes compose file
 All these different Kubernetes components are tied together through the use of labels.
 
 Those two files (Dockerfile and Docker compose file) are the keys to successfully containerize any software application.
+
+## Exercise
+
+Let us suppose that we want to deploy on a container platform an application written in Python like this one:
+```
+#!/usr/bin/env python3
+import collections
+fichero='/data/words.txt'
+lista=sorted(list(set([palabra.strip().lower() for palabra in open(fichero,'r')])))
+def unico(palabra):
+  return ''.join(sorted(palabra))
+conjunto_unicos=collections.defaultdict(list)
+for palabra in lista:
+  conjunto_unicos[unico(palabra)].append(palabra)
+def anagramas(palabra):
+  return conjunto_unicos[unico(palabra)]
+def anagramas_lista(lista):
+  return {palabra:anagramas(palabra) for palabra in lista if len(anagramas(palabra))>1}
+def anagramas_lista_cuenta(lista):
+  return {palabra:len(anagramas(palabra))-1 for palabra in lista if len(anagramas(palabra))>1}
+def anagramas_lista_max(lista):
+  cuenta_max=0
+  for palabra in lista:
+    if len(anagramas(palabra))-1>cuenta_max:
+      cuenta_max=len(anagramas(palabra))-1
+      palabra_max=palabra
+  return {palabra_max: cuenta_max}  
+conjunto_tamano=collections.defaultdict(list)
+for palabra in lista:
+  conjunto_tamano[len(palabra)].append(palabra)
+cuenta_anagramas={}
+for tamano,palabras in conjunto_tamano.items():
+  cuenta_anagramas[tamano]=sum(1 for palabra in palabras if len(anagramas(palabra))>1)
+RESULTADO=cuenta_anagramas
+print(RESULTADO)
+```
+This sample application will read a file containing a dictionary, separate words into classes of words with the same length and print the total number of anagrams in each class.
+
+An anagram is a word or phrase formed by rearranging the letters of a different word or phrase, typically using all the original letters exactly once.
+For example LISTEN = SILENT.
+Please check the reference in Wikipedia:
+- https://en.wikipedia.org/wiki/Anagram
+
+If we want to deploy such application in a container we will need to use a Docker image that will contain all the necessary libraries.
+We can create that image or we can use an existing image.
+Docker Hub is an excellent place to search for an existing Docker image. 
+Here we have a Docker image that contains all the necessary Python libraries:
+- https://hub.docker.com/_/python
+
+There are many different images available created with different base operating systems. 
+Many customers choose Docker images based on Linux Alpine because of their small size.
+Here is the command you can use to download this image:
+```
+docker pull python:alpine
+```
+
+And this is the Dockerfile that was used to create this image:
+- https://github.com/docker-library/python/blob/master/3.10/alpine3.15/Dockerfile
+
+Let us suppose that you clone this Github repository that contains a sample of dictionary and the Python script:
+- https://github.com/academiaonline-org/anagrams
+
+You can clone the repositoy with the following command:
+```
+git clone https://github.com/academiaonline-org/anagrams && cd anagrams
+```
+
+In order to run the container this would be the command:
+```
+docker run --entrypoint python3 --volume ${PWD}/data/words.txt:/data/words.txt:ro --volume ${PWD}/src/anagrams.py:/data/anagrams.py:ro --workdir /data/ python:alpine anagrams.py
+```
+
+Let us explain this command line:
+- ```docker run``` will create a container and run our application defined in the entrypoint: ```python3```
+- The argument of the entrypoint is written at the end of the line: ```anagrams.py```
+- Entrypoint and arguments will be equivalent to directly run on the command line: ```python3 anagrams.py```
+- In order for the application to locate the script we need to run our application in the specific working directory defined with the parameter: ```workdir```
+- We also need to mount our dictionary file on the container filesystem. We use the option ```volume``` for this purpose.
+- We also need to mount the Python script on the container filesystem. We use again the option ```volume``` for this purpose.
+- In order to increase the security of our containers we mount these two files in read-only mode adding the option ```:ro``` to the right of the volume option.
+
+The output of the command will be a map of values representing the length of the class and the number of anagrams in that class.
+In my case this is the value that I get:
+```
+{1: 0, 2: 80, 3: 805, 5: 4497, 4: 2790, 8: 4821, 7: 5759, 9: 3552, 6: 6246, 11: 1054, 10: 2082, 12: 558, 14: 140, 16: 70, 15: 90, 20: 6, 19: 14, 17: 44, 13: 250, 18: 20, 21: 8, 22: 4, 23: 0, 24: 0}
+```
+
