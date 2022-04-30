@@ -149,4 +149,4 @@ In my case this is the values that I get:
 ```
 The maximum number of anagrams (6246) is achieved with words of 6 characters of length.
 
-This is a very simple example written in Python but you could also use a more complex application designed for data analysis.
+This is a very simple example written in Python but you could have used a more complex application designed for data analysis.
