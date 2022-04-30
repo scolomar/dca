@@ -64,7 +64,7 @@ Those two files (Dockerfile and Docker compose file) are the keys to successfull
 
 ## Exercise
 
-Let us suppose that we want to deploy on a container platform an application written in Python like this one:
+Let us suppose that we want to deploy on a container an application written in Python like this one:
 ```
 #!/usr/bin/env python3
 import collections
