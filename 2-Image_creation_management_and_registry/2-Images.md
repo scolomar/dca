@@ -142,9 +142,11 @@ Let us explain this command line:
 - We also need to mount the Python script on the container filesystem. We use again the option ```volume``` for this purpose.
 - In order to increase the security of our containers we mount these two files in read-only mode adding the option ```:ro``` to the right of the volume option.
 
-The output of the command will be a map of values representing the length of the class and the number of anagrams in that class.
-In my case this is the value that I get:
+The output of the command will be a map of values representing the length of the classes and the number of anagrams in each class.
+In my case this is the values that I get:
 ```
 {1: 0, 2: 80, 3: 805, 5: 4497, 4: 2790, 8: 4821, 7: 5759, 9: 3552, 6: 6246, 11: 1054, 10: 2082, 12: 558, 14: 140, 16: 70, 15: 90, 20: 6, 19: 14, 17: 44, 13: 250, 18: 20, 21: 8, 22: 4, 23: 0, 24: 0}
 ```
+The maximum number of anagrams (6246) is achieved with words of 6 characters of length.
 
+This is a very simple example written in Python but you could also use a more complex application designed for data analysis.
