@@ -35,3 +35,13 @@ I have witnessed some cases where the customer was incorrectly using a cached ve
 Though it is part of a different process I would also like to mention here the importance of checking the Dockerfile template.
 If the Dockerfile is poorly designed the build process might reuse cached layers instead of building a brand new Docker image. 
 That would therefore result in a Docker container running an outdated version of the software.
+
+## Exercise
+
+In this exercise we are going to learn how to set up a local registry.
+We will use the following Docker image:
+- https://hub.docker.com/_/registry
+
+To deploy a local registry we only need to run the following command:
+```
+```
