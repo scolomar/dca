@@ -275,4 +275,4 @@ Of course we can still use any other Docker command to troubleshoot any issues w
 2. `docker logs` to check the container logs.
 3. `docker inspect` to view more details about a Docker object.
 4. `docker service ls` to list the deployed services.
-5. `docker service logs`to see the logs of a service.
+5. `docker service logs` to see the logs of a service.
