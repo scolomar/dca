@@ -19,7 +19,7 @@ That is why the version of the compose file that appears in the manifest is so i
 The meaning of the various configuration elements will be different depending on the selected version so it is important to check whether a given feature is available in the version you are using.
 For example `config` definitions are only supported in version 3.3 and higher of the compose file format as specified in the official documentation.
 
-* There is sometimes confussion regarding the name of the Docker compose file and the use of `docker-compose`. 
+* There is sometimes confusion regarding the name of the Docker compose file and the use of `docker-compose`. 
 Docker Swarm is an orchestrator integrated in the Docker enginer but `docker-compose` is a separate application written in Python.
 Docker Swarm is an orchestrator in the sense that it can handle the deployment of your workload across a network of worker nodes. 
 That is not the case of `docker-compose` that can only deploy in a standalone machine using only basic Docker commands. 
