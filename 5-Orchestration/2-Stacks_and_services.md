@@ -10,7 +10,9 @@ You need a Docker compose file to deploy your stack.
 This a manifest very similar to a Kubernetes manifest.
 The main difference between Docker and Kubernetes manifests is that in Kubernetes every object is described in its own manifest meanwhile Docker groups in the same compose file all the elements of the stack such as networks, volumes, services, secrets, configs, and any other fundamental part of your deployment.
 
-When you are creating your Docker compose file to deploy your application it is good practice to check often the official reference: https://docs.docker.com/compose/compose-file.
+When you are creating your Docker compose file to deploy your application it is good practice to check often the official reference:
+- https://docs.docker.com/compose/compose-file.
+
 It is the only source of trust when it comes to configure your deployment. 
 The documentation is dynamic and is updated with any new feature or deprecation.
 That is why the version of the compose file that appears in the manifest is so important to determine which version of the API it should reference.
@@ -111,3 +113,70 @@ The same issue happens in Kubernetes with pods (which represent the scheduling o
 If a pod fails for some reason then it is replaced by a new one but never rescheduled or restarted.
 There is therefore a clear similarity between Docker tasks and Kubernetes pods.
 The main difference between a Docker task and a Kubernetes pod is that a Docker task can only spin up one individual container (replica) meanwhile a Kubernetes pod can host more than one container.
+
+## Exercise 1
+
+Let us deploy a few sample applications on our container platform.
+We are going to use the Docker Swarm cluster created in the previous chapter.
+
+In our first example we are going to deploy a very simple PHP application. Though the code that we are going to use is very simple, the principles would still be the same even when using more complex source code. In our case we are going to deploy PHP containers serving the following PHP code:
+```
+<?php phpinfo();?>
+```
+
+If we wanted to run this container using the standalone Docker engine then we would run the following code:
+```
+echo '<?php phpinfo();?>' | tee /tmp/index.php
+
+docker run --detach --entrypoint php --name phpinfo --publish 8080 --restart always --user nobody --volume /tmp/index.php:/app/index.php:ro --workdir /app/ php -f index.php -S 0.0.0.0:8080
+```
+With the first command we are creating the PHP index file that we are going to serve.
+The second line creates the container that will run the PHP embedded web server.
+
+Let us analyze the different parameters that compose the command line:
+1. The command `docker run` will call the Docker engine to create the container.
+2. The option `detach` will run the process in the background. Otherwise the terminal would be blocked by the output of the main process that is running in the container.
+3. The option `entrypoint` defines the binary the will be run in the container as the main process (`/usr/local/bin/php` in our case). Normally there will be a `PATH` environment variable defined in the container so that we will not need to specify the absolute path of the binary: `php` will be enough to describe the location of the entrypoint.
+4. The option `name` will give a name to our container. This will be useful for troubleshooting and when referring to the container at any moment in the future.
+5. The option `publish` will specify a port in the container network that we want to map into the host network creating what is called (in Kubernetes) a "nodePort". This host port will be randomly chosen from a specific range (starting at `32768` to avoid conflicting with Kubernetes own range). It is possible to hardcode the value of the "nodePort" but it is highly recommended not to do so in order to avoid conflicting situations. Thanks to this mapping we will be able to connect to the container port targeting the random host port on the host network. In this example we will be able to access the container web server pointing to the host network (since the container network is unaccessible by default).
+6. The option `restart` will keep our container always up and running automatically recovering after any kind of failure or shutdown.
+7. The option `user` will specify the user that we want to take ownership of the process running at the entrypoint. In our example we want the user `nobody` to take ownership of the `php` process. This is obviously done in order to improve the security of the container. It is also recommended not to use any system username because those users could be used for other functions of the Linux system. Following this recommendation `nobody` would not be a good choice and it would be necessary to create a dedicated user to run the entrypoint binary.
+8. The option `volume` will mount the file that we have just created on our local filesystem (`/tmp/index.php`) into the container on the specified location (`/app/index.php`). The cointainer location does not need to exist (in this case the folder `/app/` will be automatically created when starting the container).
+9. The option `workdir` will specify the working directory where we want to run the process. It is typically chosen the location of the data.
+10. After the last option comes the name of the Docker image (`php` in our case). It is an abreviation though the full name would be: `index.docker.io/library/php:latest` which gets simplified with the short name `php`. We could have used for example `php:alpine` instead (or in its full name: `index.docker.io/library/php:alpine`.
+11. After the name of the Docker image comes the list of arguments for the entrypoint. If we wanted to run the application without containerization this would be the command: `php -f index.php -S 0.0.0.0:8080`. Therefore the arguments of the entrypoint are: `-f index.php -S 0.0.0.0:8080`. It is following PHP syntax and basically means the file to publish (`-f index.php`) and the port and IP where to listen (`-S 0.0.0.0:8080`). (You can get more information running `php -h` or checking the PHP documentation).
+
+We have just described how to deploy the application with a standalone Docker engine.
+This can be very useful for testing or even deploying an application in a scenario where we do not need high availability.
+We need to understand that the application will be stopped when the Docker enginer is down because of failure or maitenance purposes.
+In order to ensure high availability of our application we need to create a Docker service that will be migrated to another Docker engine (that is to another host) if our current host is down for any reason.
+Let us see how we can deploy our application on high availability mode.
+We can do that with the command line or we can use a Docker compose file.
+These would be the commands to deploy our PHP service with high availability:
+```
+echo '<?php phpinfo();?>' | docker config create index.php -
+
+docker service create --config source=index.php,target=/app/index.php,mode=0400,uid:65534 --entrypoint php --mode replicated --name phpinfo --publish 8080 --read-only --replicas 2 --restart-condition any --user nobody --workdir /app/ php -f index.php -S 0.0.0.0:8080
+```
+
+In the first command we have created a Docker config. It is a Docker object that will store our configuration file as a key-value record in Docker Swarm database.
+In case we needed secrecy we could have created a Docker secret instead. This would have been the command to create the Docker secret:
+```
+echo '<?php phpinfo();?>' | docker config create index.php -
+```
+
+In the second command we have created the Docker service with the following optins:
+1. The option `config` specifies the Docker config we want to mount inside the container including the permissions and user ID (`65534` for the user `nobody`) to access the mounted file.
+2. The option `entrypoint`specifies the entrypoint binary for the application we want to run inside our container.
+3. The option `mode` indicates whether we want to deploy the service as replicated or global. Replicated is the default mode. Global means to deploy exactly one replica per node.
+4. The option `name` gives a name to identify the service.
+5. The option `publish` will map a random port on the host (in the range starting at `30000`) with the specified container port  of the replicas (`8080` in our case).
+6. The option `read-only` will mount the container filesystem of the replicas in read-only mode which can be very useful for security purposes.
+7. The option `replicas` indicates the number of containers we want to deploy for our service. They will be evenly distributed across the nodes in a best-effort way with no guarantee of symmetry.
+8. The option `restart-condition` specifies the restarting condition for the containers in case of failure or any other reason.
+9. The option `user` indicates the user that will take ownership of the main process.
+10. The option `workdir` specifies the working directory where we want to run the main process.
+11. After all these options come the name of the Docker image (`php`) which is a simplification of `index.docker.io/libary/php:latest`.
+12. After the name of the image comes the arguments for the entrypoint: `-f index.php -S 0.0.0.0:8080`.
+13. You can use the command `docker service create --help` to explore other possible options.
+
