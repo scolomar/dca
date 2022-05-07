@@ -114,7 +114,7 @@ If a pod fails for some reason then it is replaced by a new one but never resche
 There is therefore a clear similarity between Docker tasks and Kubernetes pods.
 The main difference between a Docker task and a Kubernetes pod is that a Docker task can only spin up one individual container (replica) meanwhile a Kubernetes pod can host more than one container.
 
-## Exercise 1
+## Exercise
 
 Let us deploy a few sample applications on our container platform.
 We are going to use the Docker Swarm cluster created in the previous chapter.
@@ -156,7 +156,7 @@ These would be the commands to deploy our PHP service with high availability:
 ```
 echo '<?php phpinfo();?>' | docker config create index.php -
 
-docker service create --config source=index.php,target=/app/index.php,mode=0400,uid:65534 --entrypoint php --mode replicated --name phpinfo --publish 8080 --read-only --replicas 2 --restart-condition any --user nobody --workdir /app/ php -f index.php -S 0.0.0.0:8080
+docker service create --config source=index.php,target=/app/index.php,mode=0400,uid=65534 --entrypoint php --mode replicated --name phpinfo --publish 8080 --read-only --replicas 2 --restart-condition any --user nobody --workdir /app/ php -f index.php -S 0.0.0.0:8080
 ```
 
 In the first command we have created a Docker config. It is a Docker object that will store our configuration file as a key-value record in Docker Swarm database.
@@ -180,3 +180,62 @@ In the second command we have created the Docker service with the following opti
 12. After the name of the image comes the arguments for the entrypoint: `-f index.php -S 0.0.0.0:8080`.
 13. You can use the command `docker service create --help` to explore other possible options.
 
+Now that we have created our Docker service to deploy our containerized application there are some useful commands to troubleshoot any issues that might appear:
+1. `docker service ls` will list the currently deployed services.
+2. `docker service logs` will fetch the logs of a service or task. The command will actually provide the output of the main application (with PID number 1) running on the deployed containers. If the running application does not provide any output then the logs will be empty.
+3. `docker service inspect` will display detailed information on one or more services which can be useful for troubleshooting failing services.
+4. `docker service ps` will list the tasks of one or more services. If there is any failure in any of the deployed containers we will visualize it with this command.
+5. `docker service rm` will let us remove one or more services.
+6. `docker service scale` will scale one or more replicated services (it will obviously not work for global services).
+7. Please check other options with the command `docker service --help`. It is important to learn to use the embedded help of Docker commands.
+
+Let us deploy a misconfigured service in order to provoke a failure and be able to debug it.
+The following command will fail to deploy the service because there is an error in one of the parameters:
+```
+docker service create --config source=index.php,target=/app/index.php,mode=0400,uid=nobody --detach --entrypoint php --mode replicated --name phpinfo-failure --publish 8080 --read-only --replicas 2 --restart-condition any --user nobody --workdir /app/ php -f index.php -S 0.0.0.0:8080
+```
+
+With the command `docker service ls` we will see that there is a service with `0/2` replicas meaning that it has not been able to correctly run any of the replicas.
+We can see more details with the command `docker service ps phpinfo-failure --no-trunc` that will show the reason for the failing container: "starting container failed: strconv.Atoi: parsing "nobody": invalid syntax".
+The service was misconfigured because instead of `uid=65534` we wrote `uid=nobody`.
+
+Now it is time to learn how we can deploy this same PHP service using a template instead of a command line.
+The advantages of using YAML templates instead of command lines are many:
+1. We will be able to track any changes through a Version Control System (like git).
+2. It will be easier to configure a CI/CD pipeline based on that template.
+3. It will be easier to share with other teams and reproduce any deployment.
+4. It will be more reliable to track changes in the template than the history of the past run commands.
+
+In order to create a service with a YAML template we will prepare a Docker compose file that will be sent to the Docker engine whose API will process the request and generate the necessary objects.
+The result will be equivalent to having used the command line for that purpose.
+
+This is an example of a valid Docker compose file to deploy the sample application:
+```
+# docker-compose.yaml
+services:
+  phpinfo:
+    command:
+      - -f
+      - index.php
+      - -S
+      - 0.0.0.0:8080
+    configs:
+      - 
+        mode: 0400
+        source: index.php
+        target: /app/index.php
+        uid: '65534'
+    deploy:
+      mode: replicated
+      replicas: 2
+      restart_policy:
+        condition: any
+    entrypoint: php
+    image: php
+    ports:
+      - 8080
+    read_only: true
+    user: nobody
+    working_dir: /app/
+version: "3.8"
+```
