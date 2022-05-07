@@ -212,30 +212,67 @@ The result will be equivalent to having used the command line for that purpose.
 This is an example of a valid Docker compose file to deploy the sample application:
 ```
 # docker-compose.yaml
+# THIS IS THE LIST OF DOCKER CONFIGS WE WANT TO APPLY
+configs:
+  # THIS IS THE DOCKER CONFIG WE CREATED IN A PREVIOUS STEP
+  index.php:
+    # THIS WILL INVOKE THE PREVIOUSLY CREATED DOCKER CONFIG
+    external: true
+# THIS IS THE LIST OF SERVICES WE WANT TO CREATE
 services:
+  # THIS IS THE NAME OF THE SERVICE
   phpinfo:
+    # THESE ARE THE ARGUMENTS OF THE ENTRYPOINT
     command:
       - -f
       - index.php
       - -S
       - 0.0.0.0:8080
+    # EQUIVALENT TO: --config source=index.php,target=/app/index.php,mode=0400,uid=65534
     configs:
       - 
         mode: 0400
         source: index.php
         target: /app/index.php
         uid: '65534'
+    # EQUIVALENT TO: --mode replicated --replicas 2 --restart-condition any
     deploy:
       mode: replicated
       replicas: 2
       restart_policy:
         condition: any
+    # EQUIVALENT TO: --entrypoint php
     entrypoint: php
+    # THIS IS THE NAME OF THE DOCKER IMAGE
     image: php
+    # EQUIVALENT TO: --publish 8080
     ports:
       - 8080
+    # EQUIVALENT TO: --read-only
     read_only: true
+    # EQUIVALENT TO: --user nobody
     user: nobody
+    # EQUIVALENT TO: --workdir /app/
     working_dir: /app/
+# THIS IS THE DOCKER API VERSION THAT WE WANT TO USE FOR THIS DEPLOYMENT
 version: "3.8"
 ```
+
+Once we have saved the previous file with the name `docker-compose.yaml` (for example) we can then deploy the stack (composite application) with the following command:
+```
+docker stack deploy --compose-file docker-compose.yaml PHPINFO
+```
+
+Then we can use the following commands to investigate the deployment:
+1. `docker stack ls` to list the deployments.
+2. `docker stack services PHPINFO` to list the services that have been deployed.
+3. `docker stack ps PHPINFO` to retrieve more details about the containers deployed by our stack.
+4. `docker stack deploy --compose-file docker-compose.yaml PHPINFO` to redeploy the stack after any changes on the template.
+5. `docker stack rm PHPINFO` to remove the deployment.
+
+Of course we can still use any other Docker command to troubleshoot any issues with the deployed stack (like for example):
+1. `docker ps` to see the list of containers.
+2. `docker logs` to check the container logs.
+3. `docker inspect` to view more details about a Docker object.
+4. `docker service ls` to list the deployed services.
+5. `docker service logs`to see the logs of a service.
