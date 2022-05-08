@@ -55,4 +55,35 @@ First we are going to manually kill the container and see how Docker engine reac
 In order to kill the container we first need to locate it with the following command: `docker service ps phpinfo`.
 The output of this command will show us on which node is the container actually running.
 In my case it says it is running on Node2 so I will jump to that node and identify the running container with the command `docker ps | grep phpinfo`.
-I will kill the container running the following command: `docker rm --force $( docker ps | grep phpinfo | awk '{ print $1 }' )`.
+I will kill the container with the following command on Node2:
+```
+docker rm --force $( docker ps | grep phpinfo | awk '{ print $1 }' )
+```
+
+Now jump to any manager node to observe the reaction of Docker Swarm.
+If we again run `docker service ps phpinfo` we can see that there are two tasks in the list: one is running and the other failed a few seconds ago with an error message: `non-zero exit` caused by the `docker rm` command.
+By the difference in seconds between the failed container and the running container we note that it just took about 5 seconds to recover the container from the forced failure.
+Awesome!
+
+The recovered container will be recreated on the same node as the original container since when a task is assigned to a worker node that assignment is permanent until the node becomes unavailable.
+Our next experiment is to fail the node and see the reaction of Docker Swarm.
+In my case the task is running on Node2 so that I am going to shut that node down to provoke a reaction.
+So I jump to Node2 and click the "DELETE" button.
+Shortly after deleting the node Docker Swarm has detected tha failure as you can see with the command `docker node ls` whose output will show that the node is `Down`.
+After approximately 1 minute of failure Docker Swarm has migrated the task to another worker node (in my case Node3).
+It has taken more time to react since Docker Swarm is configured to be more conservative regarding node failures in order to avoid a harmful stampede.
+
+We have so far proved the automatic failover of a killed container and a deleted worker node.
+What about the control plane?
+Will Docker Swarm resist the failure of one manager node?
+As we have created a highly available cluster with 3 manager nodes nothing should happen after deleting one of the managers.
+So jump to any manager node and click the "DELETE" button.
+Docker immediately detects the node as "Unreachable" as described in the output of `docker node ls`.
+And the running service remains completely unaffected as can be checked with the command `docker service ps phpinfo`.
+Of course we can visit the running application clicking on the link with the port number at the top of the web page of the Docker Playground dashboard.
+
+But if we lose a second manager node then the situation becomes ugly.
+Docker Swarm will lose quorum at the control plane and it will become unaccessible.
+We will receive the following error message when trying to connect to the manager to query for the running services or nodes: `The swarm does not have a leader. It's possible that too few managers are online. Make sure more than half of the managers are online.`. 
+This can be a difficult situation that we will always want to avoid in a production environment.
+Nevertheless the container will continue running without any problem though disconnected to the control plane (so unmanaged and vulnerable to any kind of disruption).
