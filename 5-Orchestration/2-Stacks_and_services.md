@@ -127,7 +127,6 @@ In our first example we are going to deploy a very simple PHP application. Thoug
 If we wanted to run this container using the standalone Docker engine then we would run the following code:
 ```
 echo '<?php phpinfo();?>' | tee /tmp/index.php
-
 docker run --detach --entrypoint php --name phpinfo --publish 8080 --restart always --user nobody --volume /tmp/index.php:/app/index.php:ro --workdir /app/ php -f index.php -S 0.0.0.0:8080
 ```
 With the first command we are creating the PHP index file that we are going to serve.
@@ -155,7 +154,6 @@ We can do that with the command line or we can use a Docker compose file.
 These would be the commands to deploy our PHP service with high availability:
 ```
 echo '<?php phpinfo();?>' | docker config create index.php -
-
 docker service create --config source=index.php,target=/app/index.php,mode=0400,uid=65534 --entrypoint php --mode replicated --name phpinfo --publish 8080 --read-only --replicas 2 --restart-condition any --user nobody --workdir /app/ php -f index.php -S 0.0.0.0:8080
 ```
 
