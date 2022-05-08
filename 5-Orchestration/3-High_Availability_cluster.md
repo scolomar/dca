@@ -75,8 +75,8 @@ It has taken more time to react since Docker Swarm is configured to be more cons
 
 We have so far proved the automatic failover of a killed container and a deleted worker node.
 What about the control plane?
-Will Docker Swarm resist the failure of one manager node?
-As we have created a highly available cluster with 3 manager nodes nothing should happen after deleting one of the managers.
+Will Docker Swarm survive the failure of one manager node?
+As we have created a highly available cluster with 3 managers nothing should happen after deleting one of the manager nodes.
 So jump to any manager node and click the "DELETE" button.
 Docker immediately detects the node as `Unreachable` as described in the output of `docker node ls`.
 And the running service remains completely unaffected as can be checked with the command `docker service ps phpinfo`.
