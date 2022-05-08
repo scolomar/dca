@@ -83,7 +83,12 @@ And the running service remains completely unaffected as can be checked with the
 Of course we can visit the running application clicking on the link with the port number at the top of the web page of the Docker Playground dashboard.
 
 But if we lose a second manager node then the situation becomes ugly.
+Let us jump a second manager node and click again on the "DELETE" button.
 Docker Swarm will lose quorum at the control plane and it will become unaccessible.
-We will receive the following error message when trying to connect to the manager to query for the running services or nodes: `The swarm does not have a leader. It's possible that too few managers are online. Make sure more than half of the managers are online.`. 
+We will receive the following error message when trying to connect to the manager to query for the running services or nodes:
+```
+The swarm does not have a leader. It's possible that too few managers are online. Make sure more than half of the managers are online.
+```
+
 This can be a difficult situation that we will always want to avoid in a production environment.
-Nevertheless the container will continue running without any problem though disconnected to the control plane (so unmanaged and vulnerable to any kind of disruption).
+Nevertheless the container will continue running without any problem though disconnected from the control plane (so unmanaged and vulnerable to any kind of disruption).
