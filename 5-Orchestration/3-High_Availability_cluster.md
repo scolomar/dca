@@ -32,3 +32,19 @@ Each manager that is added to the cluster increases exponentially the complexity
 That is why Docker recommends no more than seven managers.
 
 In order to ensure high availability of the management plane we will therefore need a minimum of three managers and a maximum of seven. Docker oficially recommends five managers as the best practice for your cluster.
+
+## Exercise
+
+In this exercise we are going to test the resilience and failover of a Docker Swarm cluster.
+For this purpose we are going to use the Docker Playground platform as explained in previous chapters.
+Before proceeding go the following link and access with your Docker account:
+- https://labs.play-with-docker.com/
+
+Then create a highly available cluster with 3 managers and 2 worker nodes as described in Section 5.1: Docker Swarm (Exercise).
+It should take you less than 5 minutes.
+
+Let us deploy a sample application after the cluster is finished:
+```
+echo '<?php phpinfo();?>' | docker config create index.php -
+docker service create --config source=index.php,target=/app/index.php,mode=0400,uid=65534 --entrypoint php --mode replicated --name phpinfo --publish 8080 --read-only --replicas 1 --restart-condition any --user nobody --workdir /app/ php -f index.php -S 0.0.0.0:8080
+```
