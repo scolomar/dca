@@ -46,5 +46,13 @@ It should take you less than 5 minutes.
 Let us deploy a sample application after the cluster is finished:
 ```
 echo '<?php phpinfo();?>' | docker config create index.php -
-docker service create --config source=index.php,target=/app/index.php,mode=0400,uid=65534 --entrypoint php --mode replicated --name phpinfo --publish 8080 --read-only --replicas 1 --restart-condition any --user nobody --workdir /app/ php -f index.php -S 0.0.0.0:8080
+docker service create --config source=index.php,target=/app/index.php,mode=0400,uid=65534 --constraint node.role==worker --entrypoint php --mode replicated --name phpinfo --publish 8080 --read-only --replicas 1 --restart-condition any --user nobody --workdir /app/ php -f index.php -S 0.0.0.0:8080
 ```
+I have on purpose deployed one single replica so as to show how Docker will manage to keep one instance of our application permanently available.
+The `constraint` option will force Docker to deploy the container on a worker node (instead of a manager node).
+
+First we are going to manually kill the container and see how Docker engine reacts to this situation.
+In order to kill the container we first need to locate it with the following command: `docker service ps phpinfo`.
+The output of this command will show us on which node is the container actually running.
+In my case it says it is running on Node2 so I will jump to that node and identify the running container with the command `docker ps | grep phpinfo`.
+I will kill the container running the following command: `docker rm --force $( docker ps | grep phpinfo | awk '{ print $1 }' )`.
