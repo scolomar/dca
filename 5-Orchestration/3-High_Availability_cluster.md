@@ -83,7 +83,7 @@ And the running service remains completely unaffected as can be checked with the
 Of course we can visit the running application clicking on the link with the port number at the top of the web page of the Docker Playground dashboard.
 
 But if we lose a second manager node then the situation becomes ugly.
-Let us jump a second manager node and click again on the "DELETE" button.
+Let us jump to a second manager node and click again on the "DELETE" button.
 Docker Swarm will lose quorum at the control plane and it will become unaccessible.
 We will receive the following error message when trying to connect to the manager to query for the running services or nodes:
 ```
