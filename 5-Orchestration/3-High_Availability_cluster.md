@@ -78,7 +78,7 @@ What about the control plane?
 Will Docker Swarm resist the failure of one manager node?
 As we have created a highly available cluster with 3 manager nodes nothing should happen after deleting one of the managers.
 So jump to any manager node and click the "DELETE" button.
-Docker immediately detects the node as "Unreachable" as described in the output of `docker node ls`.
+Docker immediately detects the node as `Unreachable` as described in the output of `docker node ls`.
 And the running service remains completely unaffected as can be checked with the command `docker service ps phpinfo`.
 Of course we can visit the running application clicking on the link with the port number at the top of the web page of the Docker Playground dashboard.
 
