@@ -44,4 +44,20 @@ We will use the following Docker image:
 
 To deploy a local registry we only need to run the following command:
 ```
+docker run --detach --name registry --publish 5000:5000 --restart always --volume registry:/var/lib/registry:rw docker.io/library/registry:2
 ```
+Let us review the selected options:
+- `detach`: This option will run the process in tha background (therefore not blocking the terminal).
+- `name`: This is the name for the container. It is not necessary but will be very useful for troubleshooting and maintenance purposes.
+- `publish`: It will map a port of the host network to a port of the container network. Otherwise the registry service would not be available to an external client outside the container network.
+- `restart`: This option guarantees that Docker will restart the container if stopped for any reason.
+- `volume`: With this option I am specifying a permanent storage for the content of the registry (in this case mainly Docker images).
+
+This command will create a container running the Docker registry that will be accessible from any external location pointing to port 5000 of the host network.
+Once create we can continue with the following exercises:
+- `docker pull busybox`: This command will download busybox Docker image.
+- `docker tag busybox localhost:5000/my_library/my_busybox:1.0`: This will rename the Docker image so that we can use it on our own registry.
+- `docker push localhost:5000/my_library/my_busybox:1.0`: This will upload the Docker image to our custom local Docker registry.
+- `docker pull localhost:5000/my_library/my_busybox:1.0`: This will download the Docker image from our custom local Docker registry.
+- `docker volume inspect registry`: This will give low-level details about the persistent volume hosting the Docker images.
+- `sudo find /var/lib/docker/volumes/registry/_data/`: This will show the content of the Docker registry volume.
