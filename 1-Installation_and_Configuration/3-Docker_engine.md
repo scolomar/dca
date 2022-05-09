@@ -81,5 +81,5 @@ By default Docker will create three networks: `bridge`, `host` and `none`.
 - `host`:
   - This is the network of the host operating system. If we create a container attached to this network then it will have access to the same network resources as any other (non-containerized) process running on the host.
 - `none`:
-  - Any container attached to this network will only have available the loopbak network interface (`localhost`).
+  - Any container attached to this network will have only available the loopback network interface (`localhost`).
   - This can be useful when we want to fully isolate our containers from any network for security purposes (like for example in the case of a root Certificate Authority).
