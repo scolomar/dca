@@ -60,7 +60,7 @@ When you compile a binary you do it static or dynamically linked.
 In that case your Docker image can be completely empty (`FROM scratch`) because the process will run inside your container with all the necessary dependencies included in the executable.
 But that is normally not possible.
 It is very usual to dynamically compile your executable so that it will be linked to the necessary libraries in order to run the application.
-In that case your Docker image should contain those libraries in the exact location that the binary is expecting them to be.
+In that case your Docker image should contain those libraries in the exact location where the binary is expecting them.
   - Many customers find it easier to use a base image which contains all the typically used Linux libraries in order to ease the management of images and containers. 
 That is why you will see Dockerfiles with an entry like this: `FROM ubuntu`.
 This image will contain all the Ubuntu libraries but never the Linux kernel.
