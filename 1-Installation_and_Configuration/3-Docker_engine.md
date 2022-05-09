@@ -67,7 +67,7 @@ This image will contain all the Ubuntu libraries but never the Linux kernel.
 The Docker container will always use the Linux kernel of the host operating system.
   - Any changes in the filesystem of the container will be visible in the corresponding subfolder.
   - For any container you will find a `diff` subfolder which will contain any changes in its filesystem.
-For example if your create a new file (or modify an old file) that new file (or the new version of the old file) will be visible in the `diff` subfolder.
+For example if you create a new file (or modify an old file) that new file (or the new version of the old file) will be visible in the `diff` subfolder.
 - `/var/lib/docker/volumes/`
   - This folder will contain the Docker volumes that have been created.
 Any content of these volumes will be found in the corresponding subfolders.
