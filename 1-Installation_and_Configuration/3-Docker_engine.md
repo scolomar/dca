@@ -46,7 +46,7 @@ The content will include files like: hostname, hosts, resolv.conf and even the l
 Once we remove the container the corresponding folder will be removed.
 It is important to keep this folder available even for exited containers so as to troubleshoot what happened to that container.
 Once removed it will be impossible to recover its content.
-- Another interesting folder is: `/var/lib/docker/overlay2/`.
+- `/var/lib/docker/overlay2/`
   - This folder contains the image layers of your local Docker images.
 You can examine the content of any Docker image exploring this folder.
 Remember that a Docker image is just a folder that contains libraries and dependencies necessary for your application to run inside the Docker container.
@@ -68,7 +68,8 @@ The Docker container will always use the Linux kernel of the host operating syst
   - Any changes in the filesystem of the container will be visible in the corresponding subfolder.
   - For any container you will find a `diff` subfolder which will contain any changes in its filesystem.
 For example if your create a new file (or modify an old file) that new file (or the new version of the old file) will be visible in the `diff` subfolder.
-- `/var/lib/docker/volumes/`: This folder will contain the Docker volumes that have been created.
+- `/var/lib/docker/volumes/`
+  - This folder will contain the Docker volumes that have been created.
 Any content of these volumes will be found in the corresponding subfolders.
 Any changes in the content of these subfolders will automatically be reflected in the running container.
 
