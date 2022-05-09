@@ -53,7 +53,7 @@ And that is what you will find in that folder: binaries, libraries, configuratio
 Similar to the root filesystem of any operating system but not necessarily.
 It is custom to download Docker images that contain almost a full operating system but that is not actually needed.
 The only necessary content is the needed libraries to run your application.
-In order to run your application you will first need to compile an executable binary from the source code (or use an interpreted script).
+  - - In order to run your application you will first need to compile an executable binary from the source code (or use an interpreted script).
 When you compile a binary you do it static or dynamically linked.
 If you statically compile an executable binary from the source code then no libraries will be needed to run the application.
 In that case your Docker image can be completely empty (`FROM scratch`) because the process will run inside your container with all the necessary dependencies included in the executable.
