@@ -42,26 +42,29 @@ Let us analyze the content of this folder and subfolders:
 As already said we should never modify the content of this folder which will be dynamically updated whenever we create or remove a container.
 Each container will be stored in its own folder which name will exactly coincide with the full ID of the container.
 The content will include files like: hostname, hosts, resolv.conf and even the logs of the container.
-Any running  or exited container will have such a folder.
+  - Any running  or exited container will have such a folder.
 Once we remove the container the corresponding folder will be removed.
 It is important to keep this folder available even for exited containers so as to troubleshoot what happened to that container.
 Once removed it will be impossible to recover its content.
 - Another interesting folder is: `/var/lib/docker/overlay2/`.
-This folder contains the image layers of your local Docker images.
+  - This folder contains the image layers of your local Docker images.
 You can examine the content of any Docker image exploring this folder.
 Remember that a Docker image is just a folder that contains libraries and dependencies necessary for your application to run inside the Docker container.
 And that is what you will find in that folder: binaries, libraries, configuration files.
 Similar to the root filesystem of any operating system but not necessarily.
-It is custom to download Docker images that contain almost a full operating system but that is not actually needed.
+  - It is custom to download Docker images that contain almost a full operating system but that is not actually needed.
 The only necessary content is the needed libraries to run your application.
-  - In order to run your application you will first need to compile an executable binary from the source code (or use an interpreted script).
+In order to run your application you will first need to compile an executable binary from the source code (or use an interpreted script).
 When you compile a binary you do it static or dynamically linked.
-If you statically compile an executable binary from the source code then no libraries will be needed to run the application.
+  - If you statically compile an executable binary from the source code then no libraries will be needed to run the application.
 In that case your Docker image can be completely empty (`FROM scratch`) because the process will run inside your container with all the necessary dependencies included in the executable.
-But that is not normally possible.
+But that is normally not possible.
 It is very usual to dynamically compile your executable so that it will be linked to the necessary libraries in order to run the application.
 In that case your Docker image should contain those libraries in the exact location that the binary is expecting them to be.
-Many customers find it easier to use a base image which all Linux libraries to ease the running process of your containers. 
-That is why it is typical to use Docker images that contain entries like: `FROM ubuntu`.
-Nevertheless it will contain the Ubuntu libraries but never the Linux kernel.
+  - Many customers find it easier to use a base image which contains all the typically used Linux libraries in order to ease the management of images and containers. 
+That is why you will see Dockerfiles with an entry like this: `FROM ubuntu`.
+This image will contain all the Ubuntu libraries but never the Linux kernel.
 The Docker container will always use the Linux kernel of the host operating system.
+  - Any changes in the filesystem of the container will be visible in the corresponding subfolder.
+  - For any container you will find a `diff` subfolder which will contain any changes in its filesystem.
+For example if your create a new file (or modify an old file) that new file (or the new version of the old file) will be visible in the `diff` subfolder.
