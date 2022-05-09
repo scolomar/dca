@@ -31,7 +31,7 @@ Without installing any other software you can enable the Swarm mode to provide o
 
 ## Exercise
 
-Let us explore the different resources that have been created after a fresh installation.
+Let us explore some resources that are created after a fresh installation of Docker engine.
 
 The first interesting location is `/var/lib/docker/` where you will find all resources created by Docker.
 This folder is protected so that you need to be `root` user in order to explore its content.
