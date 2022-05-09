@@ -72,8 +72,7 @@ For example if your create a new file (or modify an old file) that new file (or 
 Any content of these volumes will be found in the corresponding subfolders.
 Any changes in the content of these subfolders will automatically be reflected in the running container.
 
-Besides these interesting locations in the filesystem of the host, there are other resources that have been created with a fresh installation of Docker.
-For example the networks.
+Besides these interesting locations in the filesystem of the host, there are other interesting resources that have been created with a fresh installation of Docker like for example the networks.
 By default Docker will create three networks: `bridge`, `host` and `none`.
 - `bridge`: this network will be used to connect any created container. This means that all containers will be able to communicate through this network (by default). It is actually recommended to create custom networks for each deployment so that each custom network will be isolated from each other. Only containers on the same network will be able to communicate between them.
 - `host`: this is the network of the host operating system. If we create a container attached to this network then it will have access to the same network resources as any other (non-containerized) process running on the host.
