@@ -62,3 +62,40 @@ But if the Pod is removed then the volumes attached to the containers inside the
 That is why Kubernetes has another object called PersistentVolume that is external to the Pod and will persist after the removal of the Pod.
 This is a specific issue of Kubernetes that needs to be taken into account so as not to confuse the persistence of the volume outside the container and the persistence of the PersistentVolume outside the Pod.
 
+## Exercise
+
+In the following exercise we are going to practice with persistent storage for our containers.
+Let us start with a very simple example where we will create a basic container and write a new file into it.
+```
+docker run --detach --name test --tty busybox
+docker exec test touch hello-world.txt
+```
+With the previous commands we have create an empty file named `hello-world.txt` inside de the container filesystem.
+We can see the changes in the filesystem with the following command:
+```
+docker diff test
+```
+And we can see the actual location of this new file with the following command:
+```
+find /var/lib/docker/overlay2/ -type f | grep hello-world.txt
+```
+We will see in the output two subfolders: `diff` and `merged`.
+- `diff` folder will show you the differences in the container filesystem compared with the original Docker image.
+- `merged` contains the "merged" filesystem: that is the merge of the original Docker image and the different changes of the container filesystem.
+
+Let us see what happens with these changes when we stop the running container:
+```
+docker stop test
+docker diff test
+find /var/lib/docker/overlay2/ -type f | grep hello-world.txt
+```
+We can still view the changes to the filesystem with `docker diff` and find `hello-world.txt` in `/var/lib/docker/overlay2/` subfolder.
+
+But what happens when we remove the container?
+Then everything disappears: the container will be erased from the system and it will not be possible to recover `hello-world.txt` as we can see after running the following commands:
+```
+docker rm test
+docker diff test
+find /var/lib/docker/overlay2/ -type f | grep hello-world.txt
+```
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
