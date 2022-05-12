@@ -54,7 +54,7 @@ Let us review the selected options:
 - `volume`: With this option I am specifying a permanent storage for the content of the registry (in this case mainly Docker images).
 
 This command will create a container running the Docker registry that will be accessible from any external location pointing to port 5000 of the host network.
-Once created we can continue with the following commands:
+Once the registry has been created we can proceed with the following commands:
 - `docker pull busybox`: This command will download busybox Docker image.
 - `docker tag busybox localhost:5000/my_library/my_busybox:1.0`: This will rename the Docker image so that we can use it on our own registry.
 - `docker push localhost:5000/my_library/my_busybox:1.0`: This will upload the Docker image to our custom local Docker registry.
