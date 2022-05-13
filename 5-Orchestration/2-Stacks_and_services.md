@@ -116,7 +116,7 @@ The main difference between a Docker task and a Kubernetes pod is that a Docker 
 
 ## Exercise
 
-Let us deploy a few sample applications on our container platform.
+Let us deploy a sample applications on our container platform.
 We are going to use the Docker Swarm cluster created in the previous chapter.
 
 In our first example we are going to deploy a very simple PHP application. Though the code that we are going to use is very simple, the principles would still be the same even when using more complex source code. In our case we are going to deploy PHP containers serving the following PHP code:
