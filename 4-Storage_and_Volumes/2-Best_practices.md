@@ -26,3 +26,30 @@ What is then the best solution?
 
 One recommended solution is to inject the configuration data in an external volume.
 This external volume will be mounted inside the container but that will not affect its performance because it will be a different filesystem.
+
+## Exercise
+
+When you create a container it is better to mount the filesystem in read-only mode: this will improve not only the security but also the performance of the container.
+The security will increase because the filesystem will not be writable in case the container is compromised.
+The performance will increase since we will avoid the penalty of the merge caused by the Copy-on-Write strategy.
+We can create a container in read-only mode with this command:
+```
+docker run --detach --name test-readonly --read-only --tty busybox
+```
+
+But there are circumstances where our containerized application needs to write stuff to the filesystem.
+For that purpose we can attach a Docker volume to the read-only container:
+```
+docker run --detach --name test-volume --read-only --tty --volume myvolume:/mydata/:rw busybox
+```
+The option `:rw` after the volume mount path means that the filesystem will be writeable.
+It is recommended to also mount the volume in read-only mode unless absolutely necessary adding the option `:ro` after the mount path:
+```
+docker run --detach --name test-volume-readonly --read-only --tty --volume myvolume:/mydata/:ro busybox
+```
+We can attach as many volumes as needed:
+```
+docker run --detach --name test-volumes --read-only --tty --volume vol1:/data1/:rw --volume vol2:/data2/:rw --volume vol3:/data3/:ro busybox
+```
+
+It is typically considered a good practice to include any configuration or data in a separated volume outside the container filesystem both for security and performance reasons.
