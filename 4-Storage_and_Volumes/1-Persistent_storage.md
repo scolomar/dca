@@ -175,7 +175,7 @@ $ find /var/lib/docker/volumes/myvolume/
 /var/lib/docker/volumes/myvolume/_data
 /var/lib/docker/volumes/myvolume/_data/hello-world.txt
 ```
-Nevertheless `docker diff` will not help me view the changes since this command only shows the changes made to the container file system and the data is now located on another file system (external to the container):
+Nevertheless `docker diff` will not be much useful in this case since this command only shows the changes made to the container file system and the data is now located on another file system (external to the container):
 ```
 $ docker diff test
 A /mydata
