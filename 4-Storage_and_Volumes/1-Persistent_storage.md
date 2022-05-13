@@ -75,11 +75,22 @@ We can see the changes in the filesystem with the following command:
 ```
 docker diff test
 ```
-And we can see the actual location of this new file with the following command:
+This is the output of the previous command:
+```
+A /hello-world.txt
+```
+The `A` at the beginning of the line means that the file has been "added" (A) in that location.
+That is the location inside the container filesystem but what is the actual location of this new file on the host filesystem?
+We can find that information with the following command:
 ```
 find /var/lib/docker/overlay2/ -type f | grep hello-world.txt
 ```
-We will see in the output two subfolders: `diff` and `merged`.
+This is the output of the command:
+```
+/var/lib/docker/overlay2/48f84f672c67eccd39373dc9003e6a8c27139024bd0e990cf682572222c375e3/diff/hello-world.txt
+/var/lib/docker/overlay2/48f84f672c67eccd39373dc9003e6a8c27139024bd0e990cf682572222c375e3/merged/hello-world.txt
+```
+We can see in the output two subfolders: `diff` and `merged`.
 - `diff` folder will show you the differences in the container filesystem compared with the original Docker image.
 - `merged` contains the "merged" filesystem: that is the merge of the original Docker image and the different changes of the container filesystem.
 
@@ -89,7 +100,17 @@ docker stop test
 docker diff test
 find /var/lib/docker/overlay2/ -type f | grep hello-world.txt
 ```
-We can still view the changes to the filesystem with `docker diff` and find `hello-world.txt` in `/var/lib/docker/overlay2/` subfolder.
+We can still view the changes to the filesystem with `docker diff` and find `hello-world.txt` in `/var/lib/docker/overlay2/` subfolder:
+```
+$ docker stop test
+test
+
+$ docker diff test
+A /hello-world.txt
+
+$ find /var/lib/docker/overlay2/ -type f | grep hello-world.txt
+/var/lib/docker/overlay2/48f84f672c67eccd39373dc9003e6a8c27139024bd0e990cf682572222c375e3/diff/hello-world.txt
+```
 
 But what happens when we remove the container?
 Then everything disappears: the container will be erased from the system and it will not be possible to recover `hello-world.txt` as we can see after running the following commands:
@@ -98,4 +119,65 @@ docker rm test
 docker diff test
 find /var/lib/docker/overlay2/ -type f | grep hello-world.txt
 ```
-XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+These are the outputs of the previous commands:
+```
+$ docker rm test
+test
+
+$ docker diff test
+Error response from daemon: No such container: test
+
+$ find /var/lib/docker/overlay2/ -type f | grep hello-world.txt
+```
+
+Therefore the data will be safe in the container as far as we do not remove the container.
+This might work in some use cases but even though the data is not lost the performance of the container is diminished because of the Copy-on-Write strategy.
+The host operating system will merge any changes in the container filesystem before the containerized application can access the modified files.
+
+There is another way to persist the data without polluting the container filesystem: Docker volumes.
+When using Docker volumes our data will be stored in a subfolder of `/var/lib/docker/volumes/` outside the container filesystem and fully bypassing the Copy-on-Write strategy:
+```
+docker run --detach --name test --read-only --tty --volume myvolume:/mydata/ busybox
+```
+In this case `myvolume` will be the name of the Docker volume that will be created to store the data. 
+The location inside the container: `/mydata/` will be created on-the-fly if it does not previously exist.
+I can even use the option `read-only` to increase the security of my container: given that the data will be written somewhere outside the container filesystem I can run it in read-only mode.
+
+Let us see the content of my new volume:
+```
+$ docker exec test ls /mydata/ -l
+total 0
+
+$ find /var/lib/docker/volumes/myvolume/
+/var/lib/docker/volumes/myvolume/
+/var/lib/docker/volumes/myvolume/_data
+```
+There is a subfolder on the host filesystem called `_data` which is originally empty and will contain all my data.
+
+Let us create a new file:
+```
+$ docker exec test touch hello-world.txt
+touch: hello-world.txt: Read-only file system
+```
+The error message is warning us that the container file system is in read-only mode.
+In order to create the new file we need to point to the external volume mounted inside the container:
+```
+docker exec test touch /mydata/hello-world.txt
+```
+Now I will be able to see the changes:
+```
+$ docker exec test ls /mydata/ -l
+total 0
+-rw-r--r--    1 root     root             0 May 13 02:29 hello-world.txt
+
+$ find /var/lib/docker/volumes/myvolume/
+/var/lib/docker/volumes/myvolume/
+/var/lib/docker/volumes/myvolume/_data
+/var/lib/docker/volumes/myvolume/_data/hello-world.txt
+```
+Nevertheless `docker diff` will not help me view the changes since this command only shows the changes made to the container file system and the data is now located on another file system (external to the container):
+```
+$ docker diff test
+A /mydata
+```
+It shows that a new folder `/mydata` has been created but it does not show the content of the data since it is actually located outside the container.
