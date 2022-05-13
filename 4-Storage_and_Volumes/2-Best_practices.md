@@ -43,7 +43,7 @@ For that purpose we can attach a Docker volume to the read-only container:
 docker run --detach --name test-volume --read-only --tty --volume myvolume:/mydata/:rw busybox
 ```
 The option `:rw` after the volume mount path means that the filesystem will be writeable.
-It is recommended to also mount the volume in read-only mode unless absolutely necessary adding the option `:ro` after the mount path:
+It is recommended to mount the volume in read-only mode unless absolutely necessary adding the option `:ro` after the mount path:
 ```
 docker run --detach --name test-volume-readonly --read-only --tty --volume myvolume:/mydata/:ro busybox
 ```
