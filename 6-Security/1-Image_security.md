@@ -38,3 +38,28 @@ I highly advise to specify the digest in the templates and manifests.
 The digest is mathematically impossible to be forged or tampered with.
 Any change of a single character in the content of the Docker image would generate a totally different digest.
 It will protect not only from malicious attacks but also from mistakenly modifying the content or pointing to a wrong image.
+
+## Exercise
+
+Let us see how we can identify the digest of a Docker image:
+```
+$ docker inspect tomcat | grep RepoDigests -A2
+        "RepoDigests": [
+            "tomcat@sha256:aa7b46f45779e295516930c778200b812add66f99595293065bad7030091f6ca"
+        ],
+```
+Once we know the digest we cand specifically download that exact version of the Docker image:
+```
+docker pull tomcat@sha256:aa7b46f45779e295516930c778200b812add66f99595293065bad7030091f6ca
+```
+
+When we are using the digest Docker will ignore the image tag and only follow the digest to identify the target.
+We can even use a fake tag that will not affect the download:
+```
+docker pull tomcat:fake-tag-1.2.3@sha256:aa7b46f45779e295516930c778200b812add66f99595293065bad7030091f6ca
+```
+
+This simple but effective strategy will avoid the danger of downloading the wrong Docker image.
+
+Another important task in order to ensure the security of our Docker image is to check its content looking for possible exploits or bugs.
+There is plenty of software solutions that will automatically perform this check.
