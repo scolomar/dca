@@ -33,7 +33,8 @@ Any two different Sandboxes (containers) which are not connected to the same Net
 
 The Container Network Model is as simple as this: in order to enable communication between containers we need to connect them to the same network otherwise the communication is not possible. Any container can be connected to many different networks.
 
-#### Example
+## Exercise
+
 A possible application use case could be like this:
 - A frontend container running an Apache web server would only be connected to the frontend network.
 - A backend container running Tomcat would be connected both to the frontend network and to the backend network.
@@ -41,3 +42,50 @@ A possible application use case could be like this:
 
 In this example scenario only the Tomcat container would therefore have access to the PostgreSQL database network. 
 The Apache web server could only talk to the Tomcat container but not to the Database.
+
+Let us create such a configuration with Docker CLI.
+The following commands will create the two networks: frontend and backend.
+```
+docker network create frontend-network
+docker network create backend-network
+```
+Let us create a frontend container that will only be connected to the frontend network:
+```
+docker run --detach --name frontend-container --network frontend-network --tty busybox
+```
+In this case we have created a dummy container that is doing nothing but running a Linux shell.
+The only purpose of this container is to show the network connectivity.
+The `frontend` network is still isolated.
+If we want to share or map the container network to the host network then we will need to run the container with the `publish` option:
+```
+docker run --detach --name frontend-container --network frontend-network --publish 8080 --tty busybox
+```
+Again the container is not running any application listening on port 8080 as this is just a proof of concept.
+
+Let us run another dummy container pretending to be a database running on the backend network:
+```
+docker run --detach --name database-container --network backend-network --tty busybox
+```
+
+If we want to communicate our backend application with the frontend and also with the database the we need to connect it to both networks.
+That is not possible with the Docker CLI.
+You can only create a new container attached to a single network when using the Docker command line.
+For that purpose I will first create the container attached to the backend network and later I will connect this same container to the frontend network:
+```
+docker run --detach --name backend-container --network backend-network --tty busybox
+docker network connect frontend-network backend-container
+```
+
+This limitation is exclusive of the `docker run` command.
+If we choose to use a Docker compose file then both networks can be perfectly configured and created using `docker stack deploy`:
+```
+networks:
+  backend-network
+  frontend-network
+services:
+  frontend:
+    image: busybox
+    network:
+      - frontend-network
+version: '3.8'
+```
