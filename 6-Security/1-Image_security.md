@@ -62,4 +62,6 @@ docker pull tomcat:fake-tag-1.2.3@sha256:aa7b46f45779e295516930c778200b812add66f
 This simple but effective strategy will avoid the danger of downloading the wrong Docker image.
 
 Another important task in order to ensure the security of our Docker image is to check its content looking for possible exploits or bugs.
-There is plenty of software solutions that will automatically perform this check.
+There is plenty of third party solutions that will automatically perform this check otherwise we will need to check it by ourselves.
+The process is basically checking the versions of the packages and modules that are installed on your Docker image in order to find security issues.
+Inspection of the Dockerfile can provide that information.
