@@ -139,6 +139,7 @@ services:
     image: tomcat:alpine
     networks:
       - backend-network
+      - frontend-network
   database:
     environment:
       MYSQL_ROOT_PASSWORD: xxx
