@@ -53,8 +53,8 @@ Once we know the digest we cand specifically download that exact version of the 
 docker pull tomcat@sha256:aa7b46f45779e295516930c778200b812add66f99595293065bad7030091f6ca
 ```
 
-When we are using the digest Docker will ignore the image tag and only follow the digest to identify the target.
-We can even use a fake tag that will not affect the download:
+Docker will ignore the image tag and only take into consideration the digest in order to identify the Docker image target.
+We can even use a fake tag that it will not affect the download:
 ```
 docker pull tomcat:fake-tag-1.2.3@sha256:aa7b46f45779e295516930c778200b812add66f99595293065bad7030091f6ca
 ```
