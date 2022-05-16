@@ -136,19 +136,21 @@ networks:
     external: false
 services:
   backend:
-    image: busybox
+    image: tomcat:alpine
     networks:
       - backend-network
   database:
-    image: busybox
+    environment:
+      MYSQL_ROOT_PASSWORD: xxx
+    image: mysql
     networks:
       - backend-network
   frontend:
-    image: busybox
+    image: nginx:alpine
     networks:
       - frontend-network
     ports:
-      - 8080
+      - 80
 version: '3.8'
 ```
 Let us save the content in a file named `docker-compose.yaml` and deploy the stack with the following command:
