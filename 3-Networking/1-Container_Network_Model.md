@@ -131,9 +131,7 @@ Let us see how we can use a Docker compose file to configure both networks at th
 ```
 networks:
   backend-network:
-    internal: true
   frontend-network:
-    external: false
 services:
   backend:
     image: tomcat:alpine
@@ -168,4 +166,11 @@ Creating service TEST_frontend
 ```
 It will first create the networks with the name of the stack `TEST_` as a prefix.
 Once the two networks have been created it will create the three services: `backend`, `database` and `frontend` (also with the same prefix `TEST_`).
-We can again use `docker inspect` command to check that containers are attached to their proper networks.
+We can again check the connectivity between containers with the following commands:
+```
+docker exec TEST_frontend.1.rkwqacwte7shbl8hqedrb2j51 ping backend
+docker exec TEST_backend.1.uxsl2etegsh4o5pskjxq96bhk ping frontend
+docker exec TEST_backend.1.uxsl2etegsh4o5pskjxq96bhk ping database
+```
+Most probably you have noticed the weird name for the container when using Docker stack. Please find below the full syntax for the container name:
+- [Stack name]_[Service name].[Task number].[Task ID]
