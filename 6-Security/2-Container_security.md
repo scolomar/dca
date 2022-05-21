@@ -41,14 +41,15 @@ If the volumes are also in read-only mode then the attack will be practically co
 Let us run a sample application in a container and let us try to make it as safe as possible:
 ```
 git clone https://github.com/academiaonline-org/anagrams && cd anagrams
-docker run --entrypoint python --network none --read-only --volume ${PWD}/data/words.txt:/data/words.txt:ro --volume ${PWD}/src/anagrams.py:/data/anagrams.py:ro --workdir /data/ python anagrams.py
+docker run --entrypoint /usr/local/bin/python --network none --read-only --user nobody:nogroup --volume ${PWD}/data/words.txt:/data/words.txt:ro --volume ${PWD}/src/anagrams.py:/data/anagrams.py:ro --workdir /data/ python anagrams.py
 ```
 Let us examine these commands step by step: the first line will just download the respective Github repository which contains the Python script as well as a sample dictionary.
 
 The second line will actually run the containerized application.
 Let us examine the different options of the command line:
-- `entrypoint` will specify the command that we want to run as the main process (PID 1) inside the container. In this example we are running the Python interpreter.
+- `entrypoint` will specify the command that we want to run as the main process (PID 1) inside the container. In this example we are running the Python interpreter. It is considered much safer to include the absolute path to the binary: `/usr/local/bin/python` instead of the alias `python`.
 - `network` will connect the container to the specified network. In this case we are using `none` as the network so that the container will have no access at all to any external network (only the local loopback network `localhost`). This is not always possible since many containers need external connectivity. Please apply this configuration whenever possible in order to properly isolate the container.
 - `read-only` will mount the container's root filesystem as read only. This is a good measure of security for our containers. If it gets compromised it will be impossible to modify the root filesystem as it is mounted as read-only. I would recommend to use this option whenever possible.
+- `user` will specify the user (and group) that will own the running application inside the container. In this example we have chosen user `nobody` and group `nogroup` in order to assign a user without any privilege. The user (or group) needs to exist before applying this option.
 - `volume` will mount an external volume inside the container. That is normally necessary when we need to inject a configuration file inside the container or when the running application needs to perform changes to the filesystem, for example. This is useful but it poses serious security threats. In order to minimize the risks I would highly encourage to use the `:ro` flag at the end of the option in order to mount the volume as read-only. Please do so whenever possible. In this example we are using two different volumes: the first one contains the sample dictionary (`words.txt`) and the second one contains the Python script that we want to execute (`anagrams.py`).
-- `workdir` is the working directory inside the container for the running application. It is a good idea to use a custom working directory instead of the default (root /).
+- `workdir` is the working directory inside the container for the running application. It is a good idea to use a custom working directory instead of the default (root /). The working directory does not need to previously exist: it will be created on-the-fly if necessary.
