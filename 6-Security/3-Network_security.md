@@ -92,4 +92,20 @@ PING test4 (172.19.0.3): 56 data bytes
 3 packets transmitted, 3 packets received, 0% packet loss
 round-trip min/avg/max = 0.081/0.097/0.128 ms
 ```
-XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+What we have seen in this exercise demonstrates that containers in the same network can communicate to each other. 
+If we are using the default bridge network then the containers need to point to the IP address of the target.
+If we are using custome bridge networks then the containers can point to the container name instead.
+
+Let us build a 3-tierd application with a frontend server, a backend application and a database. 
+The frontend should be able to connect to the backend but not to the database.
+The backend should be able to connect to both: frontend and database.
+
+We are going to use fake dummy containers since the only purpose is to demonstrate the container networking:
+```
+docker network create net-frontend
+docker network create net-backend
+docker run --detach --name container-frontend --network net-frontend --publish 80:80 nginx
+docker run --detach --name container-backend --network net-backend tomcat
+docker run --detach --name container-database --network net-backend mysql
+```
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
