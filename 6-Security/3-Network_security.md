@@ -104,8 +104,18 @@ We are going to use fake dummy containers since the only purpose is to demonstra
 ```
 docker network create net-frontend
 docker network create net-backend
-docker run --detach --name container-frontend --network net-frontend --publish 80:80 nginx
-docker run --detach --name container-backend --network net-backend tomcat
+docker run --detach --name container-frontend --network net-frontend --publish 80:80 nginx:alpine
+docker run --detach --name container-backend --network net-backend tomcat:alpine
 docker run --detach --name container-database --network net-backend mysql
+docker network connect net-frontend container-backend
 ```
-XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+Let us check the connectivity between containers. The following connection will work since the container-frontend shares a network with the container-backend:
+```
+docker exec container-frontend ping container-backend
+```
+By the contrary the next test will fail since the container-frontend is not connected to tha database network:
+```
+docker exec container-frontend ping container-database
+```
+What about the connectivity between the backend and the database?:
+```XXXXXXXXXXXXXXXXXXXX```
