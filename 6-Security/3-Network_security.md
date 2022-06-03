@@ -106,16 +106,36 @@ docker network create net-frontend
 docker network create net-backend
 docker run --detach --name container-frontend --network net-frontend --publish 80:80 nginx:alpine
 docker run --detach --name container-backend --network net-backend tomcat:alpine
-docker run --detach --name container-database --network net-backend mysql
+docker run --detach --env MYSQL_ROOT_PASSWORD=1234 --name container-database --network net-backend mysql
 docker network connect net-frontend container-backend
 ```
 Let us check the connectivity between containers. The following connection will work since the container-frontend shares a network with the container-backend:
 ```
-docker exec container-frontend ping container-backend
+$ docker exec container-frontend ping container-backend -c3
+PING container-backend (172.19.0.3): 56 data bytes
+64 bytes from 172.19.0.3: seq=0 ttl=64 time=0.230 ms
+64 bytes from 172.19.0.3: seq=1 ttl=64 time=0.186 ms
+64 bytes from 172.19.0.3: seq=2 ttl=64 time=0.201 ms
+
+--- container-backend ping statistics ---
+3 packets transmitted, 3 packets received, 0% packet loss
+round-trip min/avg/max = 0.186/0.205/0.230 ms
 ```
 By the contrary the next test will fail since the container-frontend is not connected to tha database network:
 ```
-docker exec container-frontend ping container-database
+$ docker exec container-frontend ping container-database
+ping: bad address 'container-database'
 ```
-What about the connectivity between the backend and the database?:
-```XXXXXXXXXXXXXXXXXXXX```
+What about the connectivity between the backend and the database?
+Of couse it works fine since both containers are connected to the same network:
+```
+$ docker exec container-backend ping container-database -c3
+PING container-database (172.20.0.3): 56 data bytes
+64 bytes from 172.20.0.3: seq=0 ttl=64 time=0.239 ms
+64 bytes from 172.20.0.3: seq=1 ttl=64 time=0.223 ms
+64 bytes from 172.20.0.3: seq=2 ttl=64 time=0.127 ms
+
+--- container-database ping statistics ---
+3 packets transmitted, 3 packets received, 0% packet loss
+round-trip min/avg/max = 0.127/0.196/0.239 ms
+```
