@@ -121,13 +121,13 @@ PING container-backend (172.19.0.3): 56 data bytes
 3 packets transmitted, 3 packets received, 0% packet loss
 round-trip min/avg/max = 0.186/0.205/0.230 ms
 ```
-By the contrary the next test will fail since the container-frontend is not connected to tha database network:
+By the contrary the next test will fail since the container-frontend is not connected to the database network:
 ```
 $ docker exec container-frontend ping container-database
 ping: bad address 'container-database'
 ```
 What about the connectivity between the backend and the database?
-Of couse it works fine since both containers are connected to the same network:
+Of couse it will work fine since both containers are connected to the same network:
 ```
 $ docker exec container-backend ping container-database -c3
 PING container-database (172.20.0.3): 56 data bytes
