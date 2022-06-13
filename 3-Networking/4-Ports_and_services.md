@@ -33,7 +33,7 @@ Remember that we do not need to publish a port if we only want to consume that s
 Let us deploy a basic web server:
 ```
 docker run --detach --name webserver nginx:alpine
-webserver_ip=$( docker inspect web-server | grep IPAddress.: -m 1 | cut -d '"' -f 4 )
+webserver_ip=$( docker inspect webserver | grep IPAddress.: -m 1 | cut -d '"' -f 4 )
 ```
 This command will successfully deploy an Nginx web server but it will only be available to any other container connected to the same network.
 By default all containers are connected to the default bridge network so that any container will be able to connect:
