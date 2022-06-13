@@ -151,7 +151,16 @@ test-vip.1.9rt9l2146n7a@node1    | ETag: "61f0168e-267"
 test-vip.1.9rt9l2146n7a@node1    | Accept-Ranges: bytes
 test-vip.1.9rt9l2146n7a@node1    | 
 ```
-So far we have been able to access the service from another container connected to the same network as the target but if we want to access the service from outside (like for example the Internet) then we need to create a NodePort (that is a mapping between one port of the host network and one port of the container).
+So far we have been able to access the service from another container connected to the same network as the target but this service is not accessible from outside the network of the service.
+If we try to access the web server connecting (for example) to the host network the connection will fail as we can see in the following logs:
+```
+$ curl localhost --head --silent --verbose
+*   Trying 127.0.0.1:80...
+* connect to 127.0.0.1 port 80 failed: Connection refused
+* Failed to connect to localhost port 80: Connection refused
+* Closing connection 0
+```
+If we want to access the service from outside (like for example the Internet) then we need to create a NodePort (that is a mapping between one port of the host network and one port of the container).
 We can do this with the option `publish`:
 ```
 docker service create --name webserver2 --publish 80:80 nginx:alpine
