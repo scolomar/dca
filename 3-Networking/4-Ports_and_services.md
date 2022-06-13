@@ -104,7 +104,7 @@ test.1.zkhfm3jiiq3c@node1    |
 ```
 We have directly connected to the service but we could also have connected using the IP address of the container.
 ```
-replica_ip=$( docker inspect $( docker ps --quiet | tail -1 ) | grep IPAddress.: | tail -1 | cut -d '"' -f 4 )
+replica_ip=$( docker inspect $( docker service ps webserver --quiet | tail -1 )| grep Addresses -A1 | tail -1 | cut -d'"' -f2 | cut -d/ -f1 )
 docker service create --detach --entrypoint curl --name test-ip --network my-overlay-network --restart-condition none nginx:alpine ${replica_ip} --head --silent
 ```
 Now we can check the logs of the test container and verify its success:
@@ -120,4 +120,52 @@ test-ip.1.o8ipt7ts4dzc@node1    | Connection: keep-alive
 test-ip.1.o8ipt7ts4dzc@node1    | ETag: "61f01158-267"
 test-ip.1.o8ipt7ts4dzc@node1    | Accept-Ranges: bytes
 test-ip.1.o8ipt7ts4dzc@node1    | 
+```
+What is the IP address of the Docker service?
+It is a virtual IP address that will point to the actual container replicas.
+We can retrieve this IP address by inspection of the Docker service:
+```
+$ docker service inspect webserver | grep VirtualIPs -A4
+            "VirtualIPs": [
+                {
+                    "NetworkID": "7sg8nq4uqg1wuowp5eqj4fczj",
+                    "Addr": "10.0.1.24/24"
+                }
+```
+Of course we can use this IP address to test the connection:
+```
+vip=$( docker service inspect webserver | grep VirtualIPs -A4 | awk -F'"' /Addr/'{ print $4 }' | cut -d/ -f1 )
+docker service create --detach --entrypoint curl --name test-vip --network my-overlay-network --restart-condition none nginx:alpine ${vip} --head --silent
+```
+The results are again successful:
+```
+$ docker service logs test-vip
+test-vip.1.9rt9l2146n7a@node1    | HTTP/1.1 200 OK
+test-vip.1.9rt9l2146n7a@node1    | Server: nginx/1.21.6
+test-vip.1.9rt9l2146n7a@node1    | Date: Mon, 13 Jun 2022 02:05:09 GMT
+test-vip.1.9rt9l2146n7a@node1    | Content-Type: text/html
+test-vip.1.9rt9l2146n7a@node1    | Content-Length: 615
+test-vip.1.9rt9l2146n7a@node1    | Last-Modified: Tue, 25 Jan 2022 15:26:06 GMT
+test-vip.1.9rt9l2146n7a@node1    | Connection: keep-alive
+test-vip.1.9rt9l2146n7a@node1    | ETag: "61f0168e-267"
+test-vip.1.9rt9l2146n7a@node1    | Accept-Ranges: bytes
+test-vip.1.9rt9l2146n7a@node1    | 
+```
+So far we have been able to access the service from another container connected to the same network as the target but if we want to access the service from outside (like for example the Internet) then we need to create a NodePort (that is a mapping between one port of the host network and one port of the container).
+We can do this with the option `publish`:
+```
+docker service create --name webserver2 --publish 80:80 nginx:alpine
+```
+Now we can access the service directly connecting to the host network:
+```
+$ curl localhost --head --silent
+HTTP/1.1 200 OK
+Server: nginx/1.21.6
+Date: Mon, 13 Jun 2022 02:11:10 GMT
+Content-Type: text/html
+Content-Length: 615
+Last-Modified: Tue, 25 Jan 2022 15:26:06 GMT
+Connection: keep-alive
+ETag: "61f0168e-267"
+Accept-Ranges: bytes
 ```
