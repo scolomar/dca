@@ -151,7 +151,7 @@ test-vip.1.9rt9l2146n7a@node1    | ETag: "61f0168e-267"
 test-vip.1.9rt9l2146n7a@node1    | Accept-Ranges: bytes
 test-vip.1.9rt9l2146n7a@node1    | 
 ```
-So far we have been able to access the service from another container connected to the same network as the target but this service is not accessible from outside the network of the service.
+So far we have been able to access the service from another container connected to the same network as the target but this service is not accessible from outside this network.
 If we try to access the web server connecting (for example) to the host network the connection will fail as we can see in the following logs:
 ```
 $ curl localhost --head --silent --verbose
