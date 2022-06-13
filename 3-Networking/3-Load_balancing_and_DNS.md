@@ -33,8 +33,9 @@ So that the name of the service is for Docker a FQDN that will be internally tra
 This means that our source code should point to service names instead of pointing to real IPs.
 Docker (or Kubernetes) will do the translation for us.
 
-This is an example of how our software should be written when trying to connect to a containerized microservice.
-This sample is the configuration of an Nginx reverse proxy:
+## Exercise
+
+This is a sample configuration of an Nginx reverse proxy:
 ```
 server {
   listen 80;
@@ -49,7 +50,7 @@ server {
 }
 ```
 
-As you can see in the example the `proxy_pass` directive is forwarding the traffic to `target` that is the name of another Docker service waiting for connections as shown in the Docker compose file:
+As you can see in the example above the `proxy_pass` directive is forwarding the traffic to `target` that is the name of another Docker service waiting for connections as shown in the Docker compose file:
 ```
 services:
   proxy:
