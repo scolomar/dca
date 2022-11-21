@@ -21,6 +21,8 @@ Therefore, containers will be built using this set of available namespaces to is
 
 Control groups (cgroups) are another feature of the Linux kernel initially released in 2007. It allows for the isolation of resource usage by a set of processes. You can control CPU and memory usage, disk I/O and network performance, and many other resources. It is not mandatory to configure your containers with control groups, but Docker officially considers it a best practice. Otherwise, you may compromise the stability of your cluster in case your containers exhaust the hardware resources of the host machine.
 
+### Containers vs virtual machines
+
 It is also important to understand the fundamental difference between containers and virtual machines. A virtual machine is built on a set of virtual resources provided by virtualization software, which is the hypervisor. The hypervisor will provide access to the virtual resources created on top of the actual hardware of the host machine. In the virtual machine we will install a complete operating system including the kernel as well as our main application with all the necessary dependencies. A typical example would be a virtual machine with a full operating system plus a Tomcat, MySQL, or Apache web server.
 
 Containers work in a completely different way.
