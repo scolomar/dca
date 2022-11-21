@@ -8,7 +8,7 @@ Linux namespaces are a feature of the Linux Kernel that was initially released i
 
 Namespaces are partitions of Linux kernel resources such that a set of resources, such as the process identifier (PID), is assigned to a specific Linux namespace and can only be accessed from within that namespace. In this case, the PID namespaces are nested, which means that from the root namespace you will be able to see the PID of any other process running in a nested namespace but you won't see the PID of any other process running outside of its own namespace.
 
-There are different types of namespaces as follows:
+There are different types of namespaces. Let's review the most used:
 * PID: For the process identifier (PID). This will isolate the PID of processes running in different namespaces. You will not have visibility into the PID of any processes running outside of your container.
 * MNT: For file system mount points. This namespace will allow the isolation of the file system mounted within a container from any other neighboring containers.
 * NET: For the network stacks. This namespace will provide visibility into the networking stack for a specific container and will fully isolate that networking stack from any other container. This will also allow the IP range to overlap within different containers. The routing table will also be private to that container or network namespace. Neutron uses this same technology to provide network isolation for the Openstack platform.
