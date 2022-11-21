@@ -11,11 +11,7 @@ Namespaces are partitions of Linux kernel resources such that a set of resources
 There are different types of namespaces as follows:
 * PID: For the process identifier (PID). This will isolate the PID of processes running in different namespaces. You will not have visibility into the PID of any processes running outside of your container.
 * MNT: For file system mount points. This namespace will allow the isolation of the file system mounted within a container from any other neighboring containers.
-* NET: For the network stacks.
-This namespace will provide visibility of the network stack for a specific container and totally isolate that network stack from any other container.
-This will also allow for overlapping the range of IPs inside different containers.
-The routing table will also be private to that container or network namespace.
-Neutron uses this same technology to provide network isolation for the Openstack platform.
+* NET: For the network stacks. This namespace will provide visibility into the networking stack for a specific container and will fully isolate that networking stack from any other container. This will also allow the IP range to overlap within different containers. The routing table will also be private to that container or network namespace. Neutron uses this same technology to provide network isolation for the Openstack platform.
 * IPC: For the Inter Process Communications.
 Processes running inside a container can this way safely use the shared memory resources of the host machine and those resources will be private to the container or IPC namespace.
 * UTS: For the Unix Time-Sharing namespaces that will provide a container with a given hostname and domain name.
