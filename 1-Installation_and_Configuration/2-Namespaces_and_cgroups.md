@@ -10,8 +10,7 @@ Namespaces are partitions of Linux kernel resources such that a set of resources
 
 There are different types of namespaces as follows:
 * PID: For the process identifier (PID). This will isolate the PID of processes running in different namespaces. You will not have visibility into the PID of any processes running outside of your container.
-* MNT: For the filesystem mount points.
-This namespace will allow for isolation of the filesystem mounted inside a container from any other neighbouring container.
+* MNT: For file system mount points. This namespace will allow the isolation of the file system mounted within a container from any other neighboring containers.
 * NET: For the network stacks.
 This namespace will provide visibility of the network stack for a specific container and totally isolate that network stack from any other container.
 This will also allow for overlapping the range of IPs inside different containers.
