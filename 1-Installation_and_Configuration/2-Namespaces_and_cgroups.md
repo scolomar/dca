@@ -76,7 +76,7 @@ These results basically mean that the Linux operating system by default separate
 
 This feature was available in the Linux kernel many years before Docker was developed. This set of namespaces and control groups is what we call a "container". The container assigned by default to any process running on a Linux machine is also called the global or root container. Docker uses this same technology to configure local Docker containers (typically nested namespaces of the global root namespace).
 
-Let us see the difference between this global container and a local Docker container. For this purpose let us run the following command:
+Let's see the difference between this global container and a local Docker container. To do this, we execute the following command:
 ```
 docker run --detach --entrypoint ping --name test --rm --tty library/busybox:latest localhost
 ```
