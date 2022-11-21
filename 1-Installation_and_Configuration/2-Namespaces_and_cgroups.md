@@ -2,7 +2,7 @@
 
 ### Chapter 2: Namespaces and control groups
 
-Namespaces and control groups constitute the core of the underlying technology behind containers.
+Namespaces and control groups make up the core of the underlying technology behind containers.
 
 Linux namespaces are a feature of the Linux Kernel that was initially released in 2002.
 They are the base for containers.
