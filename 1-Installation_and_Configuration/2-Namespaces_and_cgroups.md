@@ -35,7 +35,8 @@ Since containers launch system calls directly to the host kernel, there is nothi
 
 Namespaces ensure the isolation of some operating system resources, such as file system mount points, hostname, network stack, or PID. But they do not limit the use of memory, disk or CPU. To control the use of physical resources, we need to configure the control groups for that container. It is strongly recommended to configure control groups for any container that will be used in a production environment.
 
-## Exercise:
+## Exercise: Containers, namespaces and cgroups
+
 Open a terminal in any Linux system and run the following command:
 ```
 pid=1
