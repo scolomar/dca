@@ -59,8 +59,7 @@ The output will be similar to the following:
 This output shows that the process with PID 1 belongs to the root (global) control group. Any other non-containerized applications running on the same machine will show similar output. For example:
 ```
 cat /proc/$$/cgroup
-```
-```
+
 11:perf_event:/
 10:memory:/
 9:freezer:/
