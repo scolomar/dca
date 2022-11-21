@@ -19,11 +19,7 @@ There are different types of namespaces. Let's review the most used:
 
 Therefore, containers will be built using this set of available namespaces to isolate the necessary Linux Kernel resources. In addition to using namespaces, you can also use control groups to isolate the usage of resources like CPU or memory within a container.
 
-Control groups (cgroups) is another feature of the Linux Kernel initially released in 2007.
-It allows for isolation of the resource usage of a set of processes.
-You can control the usage of CPU and memory utilization, disk I/O and network throughput, and many other resources.
-It is not compulsory to set up your containers with control groups but it is officially considered as a best practice by Docker.
-You can otherwise compromise the stability of your cluster in case your containers exhaust the hardware resources of the host machine.
+Control groups (cgroups) are another feature of the Linux kernel initially released in 2007. It allows for the isolation of resource usage by a set of processes. You can control CPU and memory usage, disk I/O and network performance, and many other resources. It is not mandatory to configure your containers with control groups, but Docker officially considers it a best practice. Otherwise, you may compromise the stability of your cluster in case your containers exhaust the hardware resources of the host machine.
 
 It is important to understand the fundamental differences between containers and virtual machines.
 A virtual machine is built on top of a set of virtual resources provided by a virtualization software that is the hypervisor.
