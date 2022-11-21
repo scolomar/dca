@@ -13,7 +13,7 @@ There are different types of namespaces as follows:
 * MNT: For file system mount points. This namespace will allow the isolation of the file system mounted within a container from any other neighboring containers.
 * NET: For the network stacks. This namespace will provide visibility into the networking stack for a specific container and will fully isolate that networking stack from any other container. This will also allow the IP range to overlap within different containers. The routing table will also be private to that container or network namespace. Neutron uses this same technology to provide network isolation for the Openstack platform.
 * IPC: For Inter Process Communications. Processes running inside a container can safely use the host machine's shared memory resources, and those resources will be private to the container or IPC namespace.
-* UTS: For the Unix Time-Sharing namespaces that will provide a container with a given hostname and domain name.
+* UTS: For Unix timesharing namespaces that will provide a container with a given hostname and domain name.
 * And many others... Please refer to the Wikipedia resource to learn more about Linux namespaces: 
   * https://en.wikipedia.org/wiki/Linux_namespaces
 
