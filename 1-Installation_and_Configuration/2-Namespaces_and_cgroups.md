@@ -84,7 +84,7 @@ We can now check the process running inside this container and the control group
 ```
 cat /proc/$( sudo docker top test | awk '!/PID/{ print $2 }' )/cgroup
 ```
-The result shows the control group assigned to our process which coincides with Docker container ID:
+The output shows the control group assigned to our process that matches the Docker container ID:
 ```
 11:perf_event:/docker/a0870498d3b51140843b89f349e7d77ada7852f86fccf63cfa6169df083592f8
 10:memory:/docker/a0870498d3b51140843b89f349e7d77ada7852f86fccf63cfa6169df083592f8
