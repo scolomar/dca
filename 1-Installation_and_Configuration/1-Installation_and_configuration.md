@@ -16,7 +16,7 @@ It is impossible to run a Windows container on a Linux worker. But it is possibl
 
 File system management and how Docker works under the hood is also different for Windows and Linux. It is true that Windows provides with the Compute Service an equivalent set of features to mimic Linux features related to file systems, control groups, namespaces, and other capabilities of the Linux operating system, but this Compute Service will never be exactly the same as its Linux counterpart because there are some Linux features that are simply impossible to reproduce on a Windows operating system.
 
-## Exercise:
+## Exercise: Docker engine installation
 
 To install the Docker engine on your machine, you need to follow this documentation:
 * https://docs.docker.com/engine/install/
