@@ -33,9 +33,7 @@ The security of a container will depend on how secure the technology behind the 
 
 Since containers launch system calls directly to the host kernel, there is nothing to stop them from exhausting actual physical resources and crashing the host machine.
 
-Namespaces ensure the isolation of some operating system resources such as filesystem mount points, hostname, network stack or PID but it does not limit the usage of memory, disk or CPU.
-In order to control the usage of physical resources we need to configure the control groups or cgroups for that container.
-I would highly recommend to set up cgroups for any container that is going to be used in a production environment.
+Namespaces ensure the isolation of some operating system resources, such as file system mount points, hostname, network stack, or PID. But they do not limit the use of memory, disk or CPU. To control the use of physical resources, we need to configure the control groups for that container. It is strongly recommended to configure control groups for any container that will be used in a production environment.
 
 ## Exercise:
 Open a terminal in any Linux system and run the following command:
