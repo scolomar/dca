@@ -78,7 +78,7 @@ This feature was available in the Linux kernel many years before Docker was deve
 
 Let's see the difference between this global container and a local Docker container. To do this, we execute the following command:
 ```
-docker run --detach --entrypoint ping --name test --rm --tty library/busybox:latest localhost
+docker run --detach --name test busybox ping localhost
 ```
 Now we can check the process running inside this container and the control group assigned to it:
 ```
