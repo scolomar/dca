@@ -21,4 +21,4 @@ File system management and how Docker works under the hood is also different for
 To install the Docker engine on your machine, you need to follow this documentation:
 * https://docs.docker.com/engine/install/
 
-It can be something as easy as running ```sudo apt-get install docker.io``` though the exact process will depend on the Docker version you want to download and the operating system that is actually running on your machine.
+It can be something as easy as running `sudo apt-get install docker.io`, although the exact process will depend on the version of Docker you want to download and the operating system your machine is running.
