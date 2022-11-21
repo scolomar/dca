@@ -31,7 +31,8 @@ Containers work in a completely different way. They use namespaces and control g
 
 The security of a container will depend on how secure the technology behind the namespaces and control groups actually is. Despite the highest level of security that Linux namespaces can achieve, it will never match the security of a virtual machine provided by a bare-metal hypervisor.
 
-Given that containers launch system calls directly to the host kernel there is nothing that prevents them from exhausting the actual physical resources and crash the host machine.
+Since containers launch system calls directly to the host kernel, there is nothing to stop them from exhausting actual physical resources and crashing the host machine.
+
 Namespaces ensure the isolation of some operating system resources such as filesystem mount points, hostname, network stack or PID but it does not limit the usage of memory, disk or CPU.
 In order to control the usage of physical resources we need to configure the control groups or cgroups for that container.
 I would highly recommend to set up cgroups for any container that is going to be used in a production environment.
