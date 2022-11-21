@@ -17,8 +17,7 @@ There are different types of namespaces. Let's review the most used:
 * And many others... Please refer to the Wikipedia resource to learn more about Linux namespaces: 
   * https://en.wikipedia.org/wiki/Linux_namespaces
 
-Containers will therefore be built using this set of available namespaces to isolate the necessary resources of the Linux Kernel.
-Besides using namespaces you can also use cgroups to isolate the resource usage such as CPU or memory inside a container.
+Therefore, containers will be built using this set of available namespaces to isolate the necessary Linux Kernel resources. In addition to using namespaces, you can also use control groups to isolate the usage of resources like CPU or memory within a container.
 
 Control groups (cgroups) is another feature of the Linux Kernel initially released in 2007.
 It allows for isolation of the resource usage of a set of processes.
