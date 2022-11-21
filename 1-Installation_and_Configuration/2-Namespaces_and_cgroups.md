@@ -25,6 +25,8 @@ Control groups (cgroups) are another feature of the Linux kernel initially relea
 
 It is also important to understand the fundamental difference between containers and virtual machines. A virtual machine is built on a set of virtual resources provided by virtualization software, which is the hypervisor. The hypervisor will provide access to the virtual resources created on top of the actual hardware of the host machine. In the virtual machine we will install a complete operating system including the kernel as well as our main application with all the necessary dependencies. A typical example would be a virtual machine with a full operating system plus a Tomcat, MySQL, or Apache web server.
 
+Once our main application is running in the virtual machine, it may need access to memory or disk. It does this by launching system calls to the guest operating system. The hypervisor will then translate these into actual system calls to access the actual physical hardware. In this way, virtual machines are so secure because any system calls go through the hypervisor before reaching the host machine.
+
 Containers work in a completely different way.
 They use namespaces and cgroups to access a partition of the resources of the host machine instead of using any kind of virtualization.
 Containers have therefore absolutely nothing to do with virtualization despite some common confusion in this sense.
