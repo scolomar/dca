@@ -4,9 +4,7 @@
 
 Namespaces and control groups make up the core of the underlying technology behind containers.
 
-Linux namespaces are a feature of the Linux Kernel that was initially released in 2002.
-They are the base for containers.
-In fact they actually constitute what we know as containers.
+Linux namespaces are a feature of the Linux Kernel that was initially released in 2002. They are the foundation of what we know as containers.
 
 Namespaces are partitions of the resources of the Linux Kernel so that a set of resources such as for example the process identifier (PID) is assigned to a specific Linux namespace and is only accessible from inside that namespace.
 In this case PID namespaces are nested meaning that from the original namespace you will be able to view the PID of any other process running in a nested namespace but you will not view the PID of any other process running outside your own namespace.
