@@ -10,8 +10,7 @@ The default Docker network is secure enough for any standard production deployme
 
 You can install the Docker engine on Windows and Linux platforms. Since the container is using the Kernel of the host operating system, if we want to run a Windows container, we will need to install the Docker engine on a Windows server. If we install the Docker engine on a Linux host machine, any containers running there will use the Linux Kernel of the host operating system. Therefore, we will be able to exclusively run Linux containers on a Linux host machine.
 
-The approach typically used by many customers is to have the three managers running Docker on a Linux machine and having two different groups of workers: one group with Linux and another group with Windows.
-This way they will be able to deploy Windows and Linux applications on their container platform.
+The approach that many customers use is to have all three manager nodes run Docker on a Linux machine and have two different groups of worker nodes: a Linux group and a Windows group. This way, they will be able to deploy Windows and Linux applications on their container platform.
 
 It is impossible to run a Windows container on a Linux worker.
 But it is though possible to run a Linux container on a Windows server.
