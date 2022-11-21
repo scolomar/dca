@@ -56,9 +56,7 @@ The output will be similar to the following:
 2:cpuset:/
 1:name=systemd:/
 ```
-This result shows that process with PID 1 belongs to the control group / (root/global).
-Any other non-containerized application running on the same machine will show a similar result. 
-Like for example:
+This output shows that the process with PID 1 belongs to the root (global) control group. Any other non-containerized applications running on the same machine will show similar output. For example:
 ```
 cat /proc/$$/cgroup
 ```
