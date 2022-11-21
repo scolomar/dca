@@ -14,8 +14,7 @@ The approach that many customers use is to have all three manager nodes run Dock
 
 It is impossible to run a Windows container on a Linux worker. But it is possible to run a Linux container on a Windows server. The reason is that modern Windows servers have a Linux kernel embedded in the Windows operating system, which makes it possible to run both types of containers on a Windows machine: Linux and Windows containers. There are some features that are only available when running Linux containers on a Linux host machine. An example of such a feature is the ability to mount a volume in memory on a temporary file system.
 
-The management of the filesystem and how Docker works under the hood is also different in the case of Windows and Linux.
-It is true that Windows is providing with the Compute Service an equivalent set of features to mimic the Linux features concerning filesystems, control groups, namespaces and other Linux operating system capabilities but this Compute Service will never be exactly the same as its Linux counterpart because there are some Linux features that are just impossible to reproduce in a Windows operating system.
+File system management and how Docker works under the hood is also different for Windows and Linux. It is true that Windows provides with the Compute Service an equivalent set of features to mimic Linux features related to file systems, control groups, namespaces, and other capabilities of the Linux operating system, but this Compute Service will never be exactly the same as its Linux counterpart because there are some Linux features that are simply impossible to reproduce on a Windows operating system.
 
 ## Exercise:
 
