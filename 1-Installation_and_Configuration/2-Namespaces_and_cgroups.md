@@ -21,15 +21,7 @@ Therefore, containers will be built using this set of available namespaces to is
 
 Control groups (cgroups) are another feature of the Linux kernel initially released in 2007. It allows for the isolation of resource usage by a set of processes. You can control CPU and memory usage, disk I/O and network performance, and many other resources. It is not mandatory to configure your containers with control groups, but Docker officially considers it a best practice. Otherwise, you may compromise the stability of your cluster in case your containers exhaust the hardware resources of the host machine.
 
-It is important to understand the fundamental differences between containers and virtual machines.
-A virtual machine is built on top of a set of virtual resources provided by a virtualization software that is the hypervisor.
-The hypervisor will provide access to virtual resources built on top of the actual hardware of the host machine.
-In the virtual machine we will install a full operating system including the kernel as well as our main application with all the necessary dependencies.
-A typical example would be a virtual machine with Tomcat, MySQL or Apache web server.
-Once our main application is running on the virtual machine it might need access to memory or disk.
-For that purpose it will launch system calls to the guest operating system.
-The hypervisor will then translate those into real system calls to access the actual physical hardware.
-This way virtual machines are so secure because any system call is passed through the hypervisor before actually reaching the host machine.
+It is also important to understand the fundamental difference between containers and virtual machines. A virtual machine is built on a set of virtual resources provided by virtualization software, which is the hypervisor. The hypervisor will provide access to the virtual resources created on top of the actual hardware of the host machine. In the virtual machine we will install a complete operating system including the kernel as well as our main application with all the necessary dependencies. A typical example would be a virtual machine with a full operating system plus a Tomcat, MySQL, or Apache web server.
 
 Containers work in a completely different way.
 They use namespaces and cgroups to access a partition of the resources of the host machine instead of using any kind of virtualization.
