@@ -4,6 +4,8 @@
 
 Docker is quite easy to install and configure. The most important thing to note is that a default Docker installation is already secure "by default". This is very important because that is not the case with Kubernetes.
 
+If you are not careful when installing Kubernetes, you will end up with a container platform that is potentially hackable. In any case, securing Kubernetes is not a trivial task.
+
 Default Docker networking is secure enough for any standard production deployment.
 At the same time Docker is fully configurable with different plugins and configuration files so as to customize the network, the storage or any other critical factor.
 
