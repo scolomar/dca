@@ -8,10 +8,7 @@ If you are not careful when installing Kubernetes, you will end up with a contai
 
 The default Docker network is secure enough for any standard production deployment. At the same time, Docker is fully configurable with different plugins and configuration files to customize network, storage, or any other critical factor.
 
-You can install the Docker engine in both Windows and Linux platforms.
-Given that the container is using the Kernel of the host operating system if we want to run a Windows container then we will need to install the Docker enginer on a Windows server.
-If we install the Docker engine in a Linux host machine then any container running there will use the Linux Kernel of the host operating system.
-Therefore we will be able to run exclusively Linux containers on top of a Linux host machine.
+You can install the Docker engine on Windows and Linux platforms. Since the container is using the Kernel of the host operating system, if we want to run a Windows container, we will need to install the Docker engine on a Windows server. If we install the Docker engine on a Linux host machine, any containers running there will use the Linux Kernel of the host operating system. Therefore, we will be able to exclusively run Linux containers on a Linux host machine.
 
 The approach typically used by many customers is to have the three managers running Docker on a Linux machine and having two different groups of workers: one group with Linux and another group with Windows.
 This way they will be able to deploy Windows and Linux applications on their container platform.
