@@ -1,6 +1,6 @@
-## Chapter 1: Installation and Configuration
+## Section 1: Installation and Configuration
 
-### Section 1: Installation and configuration
+### Chapter 1: Installation and configuration
 
 Docker is quite easy to install and configure. The most important thing to note is that a default Docker installation is already secure "by default". This is very important because that is not the case with Kubernetes.
 
