@@ -37,7 +37,7 @@ Namespaces ensure the isolation of some operating system resources, such as file
 
 ## Exercise: Containers, namespaces and cgroups
 
-Open a terminal in any Linux system and run the following command:
+Open a terminal on any Linux system and run the following command:
 ```
 pid=1
 cat /proc/${pid}/cgroup
