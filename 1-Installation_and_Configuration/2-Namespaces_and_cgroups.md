@@ -6,8 +6,7 @@ Namespaces and control groups make up the core of the underlying technology behi
 
 Linux namespaces are a feature of the Linux Kernel that was initially released in 2002. They are the foundation of what we know as containers.
 
-Namespaces are partitions of the resources of the Linux Kernel so that a set of resources such as for example the process identifier (PID) is assigned to a specific Linux namespace and is only accessible from inside that namespace.
-In this case PID namespaces are nested meaning that from the original namespace you will be able to view the PID of any other process running in a nested namespace but you will not view the PID of any other process running outside your own namespace.
+Namespaces are partitions of Linux kernel resources such that a set of resources, such as the process identifier (PID), is assigned to a specific Linux namespace and can only be accessed from within that namespace. In this case, the PID namespaces are nested, which means that from the root namespace you will be able to see the PID of any other process running in a nested namespace but you won't see the PID of any other process running outside of its own namespace.
 
 There are different types of namespaces:
 
