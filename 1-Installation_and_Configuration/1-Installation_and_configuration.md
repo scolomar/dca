@@ -2,11 +2,7 @@
 
 ### Section 1: Installation and configuration
 
-Docker is pretty easy to install and configure.
-The most important thing to take into account is that a default installation of Docker is already secure "by default".
-This is very important because that is not the case for Kubernetes.
-If you are not careful when installing Kubernetes you will end up with a container platform that is potentially hackable.
-Securing Kubernetes is not a trivial task anyway.
+Docker is quite easy to install and configure. The most important thing to note is that a default Docker installation is already secure "by default". This is very important because that is not the case with Kubernetes.
 
 Default Docker networking is secure enough for any standard production deployment.
 At the same time Docker is fully configurable with different plugins and configuration files so as to customize the network, the storage or any other critical factor.
