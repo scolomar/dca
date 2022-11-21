@@ -29,8 +29,7 @@ Once our main application is running in the virtual machine, it may need access 
 
 Containers work in a completely different way. They use namespaces and control groups to access a partition of the host machine's resources instead of using any kind of virtualization. Therefore, containers have absolutely nothing to do with virtualization despite some common confusion in this regard. It's more about partitioning and isolation.
 
-The security of a container will depend on how secure the technology behind namespaces and cgroups really is.
-Despite the top level of security achievable by Linux namespaces it will never equate the security of a virtual machine provided by a bare-metal hypervisor.
+The security of a container will depend on how secure the technology behind the namespaces and control groups actually is. Despite the highest level of security that Linux namespaces can achieve, it will never match the security of a virtual machine provided by a bare-metal hypervisor.
 
 Given that containers launch system calls directly to the host kernel there is nothing that prevents them from exhausting the actual physical resources and crash the host machine.
 Namespaces ensure the isolation of some operating system resources such as filesystem mount points, hostname, network stack or PID but it does not limit the usage of memory, disk or CPU.
