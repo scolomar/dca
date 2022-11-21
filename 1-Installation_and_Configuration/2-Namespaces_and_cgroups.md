@@ -27,10 +27,8 @@ It is also important to understand the fundamental difference between containers
 
 Once our main application is running in the virtual machine, it may need access to memory or disk. It does this by launching system calls to the guest operating system. The hypervisor will then translate these into actual system calls to access the actual physical hardware. In this way, virtual machines are so secure because any system calls go through the hypervisor before reaching the host machine.
 
-Containers work in a completely different way.
-They use namespaces and cgroups to access a partition of the resources of the host machine instead of using any kind of virtualization.
-Containers have therefore absolutely nothing to do with virtualization despite some common confusion in this sense.
-It is more about partitioning and isolation.
+Containers work in a completely different way. They use namespaces and control groups to access a partition of the host machine's resources instead of using any kind of virtualization. Therefore, containers have absolutely nothing to do with virtualization despite some common confusion in this regard. It's more about partitioning and isolation.
+
 The security of a container will depend on how secure the technology behind namespaces and cgroups really is.
 Despite the top level of security achievable by Linux namespaces it will never equate the security of a virtual machine provided by a bare-metal hypervisor.
 
