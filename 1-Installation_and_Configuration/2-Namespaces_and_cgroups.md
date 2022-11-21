@@ -80,7 +80,7 @@ Let's see the difference between this global container and a local Docker contai
 ```
 docker run --detach --name test busybox ping localhost
 ```
-Now we can check the process running inside this container and the control group assigned to it:
+We can now check the process running inside this container and the control group assigned to it:
 ```
 cat /proc/$( sudo docker top test | awk '!/PID/{ print $2 }' )/cgroup
 ```
