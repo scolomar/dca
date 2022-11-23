@@ -100,12 +100,11 @@ The output shows the control group assigned to our process that matches the Dock
 ```
 We get the same ID when we check the Docker container folder or use the Docker client command:
 ```
-$ sudo ls /var/lib/docker/containers -l
-total 0
-drwx--x--- 4 root root 237 Apr  7 03:10 a0870498d3b51140843b89f349e7d77ada7852f86fccf63cfa6169df083592f8
+$ sudo ls /var/lib/docker/containers -l | awk '{ print $9 }'
+a0870498d3b51140843b89f349e7d77ada7852f86fccf63cfa6169df083592f8
 ```
 ```
-$ sudo docker ps --no-trunc
-CONTAINER ID                                                       IMAGE                    COMMAND            CREATED         STATUS         PORTS     NAMES
-a0870498d3b51140843b89f349e7d77ada7852f86fccf63cfa6169df083592f8   library/busybox:latest   "ping localhost"   4 minutes ago   Up 4 minutes             test
+$ docker ps --no-trunc | awk '{ print $1 }'
+CONTAINER ID
+a0870498d3b51140843b89f349e7d77ada7852f86fccf63cfa6169df083592f8
 ```
