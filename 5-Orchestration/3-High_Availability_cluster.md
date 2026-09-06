@@ -1,6 +1,6 @@
 ## Section 5: Orchestration
 
-### Chapter 3: High Availability cluster
+### Chapter 5.3: High Availability cluster
 
 As we have managers and workers in our cluster then we have two different types of high availability: for the management and for the workload.
 
