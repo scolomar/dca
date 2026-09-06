@@ -1,6 +1,6 @@
-## Chapter 3: Networking
+## Section 3: Networking
 
-### Section 4: Ports and services
+### Chapter 4: Ports and services
 
 Docker services are by default internal.
 When we create a service it will imply one or more containers running the same task.
