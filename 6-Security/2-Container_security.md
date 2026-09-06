@@ -1,6 +1,6 @@
 ## Section 6: Security
 
-### Chapter 2: Container security
+### Chapter 6.2: Container security
 
 Docker containers are not immutable. They are writable by default. That is not a good start for security. 
 
