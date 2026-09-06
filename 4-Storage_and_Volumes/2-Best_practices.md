@@ -1,6 +1,6 @@
-## Chapter 4: Storage and Volumes
+## Section 4: Storage and Volumes
 
-### Section 2: Best practices
+### Chapter 4.2: Best practices
 
 What are the recommended best practices regarding storage? 
 
