@@ -1,6 +1,6 @@
-## Chapter 5: Orchestration
+## Section 5: Orchestration
 
-### Section 2: Stacks and services
+### Chapter 2: Stacks and services
 
 Once you have your cluster up and running you can deploy your business application.
 A stack is a pile of microservices that will compose your containerized application.
