@@ -1,6 +1,6 @@
-## Chapter 3: Networking
+## Section 3: Networking
 
-### Section 3: Load balancing and DNS
+### Chapter 3: Load balancing and DNS
 
 One crucial aspect of Docker networking is how Docker handles the traffic towards the Docker services.
 It is very important to understand this procedure in order to wisely develop secure and reliable applications.
