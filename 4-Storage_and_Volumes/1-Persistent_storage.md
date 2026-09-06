@@ -1,6 +1,6 @@
-## Chapter 4: Storage and Volumes
+## Section 4: Storage and Volumes
 
-### Section 4.1: Persistent storage
+### Chapter 4.1: Persistent storage
 
 How does storage work for a container?
 
