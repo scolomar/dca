@@ -1,6 +1,6 @@
-## Chapter 5: Orchestration
+## Section 5: Orchestration
 
-### Section 1: Docker Swarm
+### Chapter 1: Docker Swarm
 
 Docker Swarm was released approximately two years later than Kubernetes.
 Kubernetes is a very well known orchestrator that can handle any workload of containers across many worker nodes.
