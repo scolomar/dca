@@ -1,6 +1,6 @@
-## Chapter 3: Networking
+## Section 3: Networking
 
-### Section 1: Container Network Model
+### Chapter 1: Container Network Model
 
 The Container Network Model (CNM) is an abstraction of the networking for Docker containers implemented by libnetwork.
 The CNM is built on the following three main components: 
