@@ -1,6 +1,6 @@
 ## Section 6: Security
 
-### Chapter 5.1: Image security
+### Chapter 6.1: Image security
 
 Docker images are immutable. That is a good start for security. 
 
