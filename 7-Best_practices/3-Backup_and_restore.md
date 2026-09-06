@@ -1,6 +1,6 @@
 ## Section 7: Best practices
 
-### Chapter 3: Backup and restore
+### Chapter 7.3: Backup and restore
 
 It is important to keep a backup of your Docker container platform.
 It is in general recommended to have a separated partition for /var/lib/docker folder.
