@@ -1,6 +1,6 @@
-## Chapter 7: Best practices
+## Section 7: Best practices
 
-### Section 2: CI/CD pipeline
+### Chapter 2: CI/CD pipeline
 
 Continuous Integration is about testing the new code as soon as it is developed.
 Continuous Delivery is about delivering artifacts ready for production once the release of the new code has been validated.
