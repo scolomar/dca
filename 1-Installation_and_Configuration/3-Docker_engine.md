@@ -1,6 +1,6 @@
 ## Section 1: Installation and Configuration
 
-### Chapter 3: Docker engine
+### Chapter 1.3: Docker engine
 
 The Docker engine is the core responsible for creating and managing your containers. It is open source and has a client-server architecture.
 
