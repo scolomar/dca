@@ -1,6 +1,6 @@
 ## Section 3: Networking
 
-### Chapter 2: Docker networks
+### Chapter 3.2: Docker networks
 
 One of the main advantages of using Docker is the "batteries included" networking.
 Docker networking is very efficient and secure and does not need to install any additional plugin.
