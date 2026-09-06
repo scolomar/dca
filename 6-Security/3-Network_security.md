@@ -1,6 +1,6 @@
-## Chapter 6: Security
+## Section 6: Security
 
-### Section 3: Network security
+### Chapter 3: Network security
 
 Docker networks are secure by default.
 
