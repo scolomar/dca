@@ -1,6 +1,6 @@
 ## Section 2: Image Creation, Management and Registry
 
-### Chapter 3: Registries
+### Chapter 2.3: Registries
 
 A Docker registry is a repository that will host your Docker images.
 The default Docker registry is Docker Hub at HUB.DOCKER.COM and it hosts the official Docker images for thousands of world-wide software providers.

@@ -1,6 +1,6 @@
 ## Section 2: Image Creation, Management and Registry
 
-### Chapter 2: Images
+### Chapter 2.2: Images
 
 Creating a Docker image is the first step when we want to containerize an application.
 The second step would be to create a Docker compose to configure the deployment.

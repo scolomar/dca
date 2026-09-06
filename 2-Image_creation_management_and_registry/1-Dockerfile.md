@@ -1,6 +1,6 @@
 ## Section 2: Image Creation, Management and Registry
 
-### Chapter 1: Dockerfile
+### Chapter 2.1: Dockerfile
 
 There are two fundamental manifests in any deployment of a containerized application.
 The first one is the Dockerfile that defines how our software is embedded inside a Docker image.

@@ -1,6 +1,6 @@
 ## Section 1: Installation and Configuration
 
-### Chapter 2: Namespaces and control groups
+### Chapter 1.2: Namespaces and control groups
 
 Namespaces and control groups make up the core of the underlying technology behind containers.
 

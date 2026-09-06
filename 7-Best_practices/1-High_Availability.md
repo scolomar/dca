@@ -1,6 +1,6 @@
 ## Section 7: Best practices
 
-### Chapter 1: High availability
+### Chapter 7.1: High availability
 
 When you are running your containerized application in a real production environment you should be concerned about High Availability (HA).
 
